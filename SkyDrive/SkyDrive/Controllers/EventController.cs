@@ -26,14 +26,9 @@ namespace SkyDrive.Controllers
         [HttpGet("{id:int}")]
         public EventEntity? GetById(int id)
         {
-            var entity = _context.Events.Find(id);
+            var entity = GetEntity(id);
 
-            if (entity == null)
-            {
-                throw new EntityNotFoundException($"Event with id: {id} not found");
-            }
-
-            return _context.Events.Find(id);
+            return entity;
         }
 
         [HttpPost]
@@ -48,11 +43,7 @@ namespace SkyDrive.Controllers
         [HttpPut]
         public EventEntity Put(EventEntity eventEntity)
         {
-            var entity = _context.Events.Find(eventEntity.Id);
-            if (entity == null)
-            {
-                throw new EntityNotFoundException($"Event with id: {eventEntity.Id} not found");
-            }
+            GetEntity(eventEntity.Id);
 
             _context.Events.Update(eventEntity);
             _context.SaveChanges();
@@ -63,15 +54,22 @@ namespace SkyDrive.Controllers
         [HttpDelete("{id:int}")]
         public void Delete(int id)
         {
+            var entity = GetEntity(id);
+
+            _context.Events.Remove(entity!);
+            _context.SaveChanges();
+        }
+
+        private EventEntity GetEntity(int id)
+        {
             var entity = _context.Events.Find(id);
 
-            if (entity == null)
+            if (entity is null)
             {
                 throw new EntityNotFoundException($"Event with id: {id} not found");
             }
 
-            _context.Events.Remove(entity);
-            _context.SaveChanges();
+            return entity;
         }
     }
 }

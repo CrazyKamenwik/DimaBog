@@ -26,14 +26,9 @@ namespace SkyDrive.Controllers
         [HttpGet("{id:int}")]
         public InstructorEntity? GetById(int id)
         {
-            var entity = _context.Instructors.Find(id);
+            var entity = GetEntity(id);
 
-            if (entity == null)
-            {
-                throw new EntityNotFoundException($"Instructor with id: {id} not found");
-            }
-
-            return _context.Instructors.Find(id);
+            return entity;
         }
 
         [HttpPost]
@@ -48,12 +43,7 @@ namespace SkyDrive.Controllers
         [HttpPut]
         public InstructorEntity Put(InstructorEntity instructorEntity)
         {
-            var entity = _context.Instructors.Find(instructorEntity.Id);
-
-            if (entity == null)
-            {
-                throw new EntityNotFoundException($"Instructor with id: {instructorEntity.Id} not found");
-            }
+            var entity = GetEntity(instructorEntity.Id);
 
             _context.Instructors.Update(instructorEntity);
             _context.SaveChanges();
@@ -64,15 +54,22 @@ namespace SkyDrive.Controllers
         [HttpDelete("{id:int}")]
         public void Delete(int id)
         {
+            var entity = GetEntity(id);
+
+            _context.Instructors.Remove(entity);
+            _context.SaveChanges();
+        }
+
+        private InstructorEntity GetEntity(int id)
+        {
             var entity = _context.Instructors.Find(id);
 
-            if (entity == null)
+            if (entity is null)
             {
                 throw new EntityNotFoundException($"Instructor with id: {id} not found");
             }
 
-            _context.Instructors.Remove(entity);
-            _context.SaveChanges();
+            return entity;
         }
     }
 }

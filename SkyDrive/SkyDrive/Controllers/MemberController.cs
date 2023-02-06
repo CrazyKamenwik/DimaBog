@@ -25,14 +25,9 @@ namespace SkyDrive.Controllers
         [HttpGet("{id:int}")]
         public MemberEntity? GetById(int id)
         {
-            var entity = _context.Members.Find(id);
+            var entity = GetEntity(id);
 
-            if (entity == null)
-            {
-                throw new EntityNotFoundException($"Member with id: {id} not found");
-            }
-
-            return _context.Members.Find(id);
+            return entity;
         }
 
         [HttpPost]
@@ -47,12 +42,7 @@ namespace SkyDrive.Controllers
         [HttpPut]
         public MemberEntity Put(MemberEntity memberEntity)
         {
-            var entity = _context.Members.Find(memberEntity.Id);
-
-            if (entity == null)
-            {
-                throw new EntityNotFoundException($"Member with id: {memberEntity.Id} not found");
-            }
+            var entity = GetEntity(memberEntity.Id);
 
             _context.Members.Update(memberEntity);
             _context.SaveChanges();
@@ -63,15 +53,22 @@ namespace SkyDrive.Controllers
         [HttpDelete("{id:int}")]
         public void Delete(int id)
         {
+            var entity = GetEntity(id);
+
+            _context.Members.Remove(entity!);
+            _context.SaveChanges();
+        }
+
+        private MemberEntity GetEntity(int id)
+        {
             var entity = _context.Members.Find(id);
 
-            if (entity == null)
+            if (entity is null)
             {
-                throw new EntityNotFoundException($"Member with id: {id} not found");
+                throw new EntityNotFoundException($"Event with id: {id} not found");
             }
 
-            _context.Members.Remove(entity);
-            _context.SaveChanges();
+            return entity;
         }
     }
 }
