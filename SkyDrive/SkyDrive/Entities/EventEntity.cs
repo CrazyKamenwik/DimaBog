@@ -1,7 +1,10 @@
-﻿namespace SkyDrive.Entities
+﻿using SkyDrive.Interfaces;
+
+namespace SkyDrive.Entities
 {
-    public class EventEntity : BaseEntity
+    public class EventEntity : IEntity
     {
+        public int Id { get; set; }
         public int InstructorId { get; set; }
         public DateTime DateTimeOfEvent { get; set; }
 
