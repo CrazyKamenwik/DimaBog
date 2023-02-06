@@ -24,7 +24,7 @@ namespace SkyDrive.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public EventEntity? GetById(int id)
+        public EventEntity GetById(int id)
         {
             var entity = GetEntity(id);
 

@@ -43,7 +43,7 @@ namespace SkyDrive.Controllers
         [HttpPut]
         public InstructorEntity Put(InstructorEntity instructorEntity)
         {
-            var entity = GetEntity(instructorEntity.Id);
+            GetEntity(instructorEntity.Id);
 
             _context.Instructors.Update(instructorEntity);
             _context.SaveChanges();

@@ -65,7 +65,7 @@ namespace SkyDrive.Controllers
 
             if (entity is null)
             {
-                throw new EntityNotFoundException($"Event with id: {id} not found");
+                throw new EntityNotFoundException($"Member with id: {id} not found");
             }
 
             return entity;
