@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SkyDrive.Entities;
+using SkyDrive.Exceptions;
 
 namespace SkyDrive.Controllers
 {
@@ -15,11 +16,18 @@ namespace SkyDrive.Controllers
             _context = context;
             _logger = logger;
         }
-
         [HttpGet]
         public List<MemberEntity> GetAll()
         {
             return _context.Members.ToList();
+        }
+
+        [HttpGet("{id:int}")]
+        public MemberEntity? GetById(int id)
+        {
+            var entity = GetEntity(id);
+
+            return entity;
         }
 
         [HttpPost]
@@ -29,6 +37,38 @@ namespace SkyDrive.Controllers
             _context.SaveChanges();
 
             return memberEntity;
+        }
+
+        [HttpPut]
+        public MemberEntity Put(MemberEntity memberEntity)
+        {
+            var entity = GetEntity(memberEntity.Id);
+
+            _context.Members.Update(memberEntity);
+            _context.SaveChanges();
+
+            return memberEntity;
+        }
+
+        [HttpDelete("{id:int}")]
+        public void Delete(int id)
+        {
+            var entity = GetEntity(id);
+
+            _context.Members.Remove(entity!);
+            _context.SaveChanges();
+        }
+
+        private MemberEntity GetEntity(int id)
+        {
+            var entity = _context.Members.Find(id);
+
+            if (entity is null)
+            {
+                throw new EntityNotFoundException($"Member with id: {id} not found");
+            }
+
+            return entity;
         }
     }
 }

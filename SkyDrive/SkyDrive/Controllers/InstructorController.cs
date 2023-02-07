@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SkyDrive.Entities;
+using SkyDrive.Exceptions;
 
 namespace SkyDrive.Controllers
 {
@@ -22,6 +23,14 @@ namespace SkyDrive.Controllers
             return _context.Instructors.ToList();
         }
 
+        [HttpGet("{id:int}")]
+        public InstructorEntity? GetById(int id)
+        {
+            var entity = GetEntity(id);
+
+            return entity;
+        }
+
         [HttpPost]
         public InstructorEntity Post(InstructorEntity instructorEntity)
         {
@@ -29,6 +38,38 @@ namespace SkyDrive.Controllers
             _context.SaveChanges();
 
             return instructorEntity;
+        }
+
+        [HttpPut]
+        public InstructorEntity Put(InstructorEntity instructorEntity)
+        {
+            GetEntity(instructorEntity.Id);
+
+            _context.Instructors.Update(instructorEntity);
+            _context.SaveChanges();
+
+            return instructorEntity;
+        }
+
+        [HttpDelete("{id:int}")]
+        public void Delete(int id)
+        {
+            var entity = GetEntity(id);
+
+            _context.Instructors.Remove(entity);
+            _context.SaveChanges();
+        }
+
+        private InstructorEntity GetEntity(int id)
+        {
+            var entity = _context.Instructors.Find(id);
+
+            if (entity is null)
+            {
+                throw new EntityNotFoundException($"Instructor with id: {id} not found");
+            }
+
+            return entity;
         }
     }
 }
