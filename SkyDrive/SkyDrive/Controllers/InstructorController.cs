@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SkyDrive.Entities;
-using SkyDrive.Exceptions;
+using SkyDrive.BLL.Entities;
+using SkyDrive.BLL.Interfaces;
 
 namespace SkyDrive.Controllers
 {
@@ -9,67 +9,49 @@ namespace SkyDrive.Controllers
     public class InstructorController : ControllerBase
     {
         private readonly ILogger<InstructorController> _logger;
-        private readonly ApplicationContext _context;
+        private readonly IInstructorService _instructorService;
 
-        public InstructorController(ILogger<InstructorController> logger, ApplicationContext context)
+        public InstructorController(ILogger<InstructorController> logger, IInstructorService instructorService)
         {
-            _context = context;
+            _instructorService = instructorService;
             _logger = logger;
         }
 
         [HttpGet]
-        public List<InstructorEntity> GetAll()
+        public async Task<IEnumerable<InstructorEntity>> GetAll()
         {
-            return _context.Instructors.ToList();
+            return await _instructorService.GetAllInstructorEntities();
         }
 
         [HttpGet("{id:int}")]
-        public InstructorEntity? GetById(int id)
+        public async Task<InstructorEntity?> GetById(int id)
         {
-            var entity = GetEntity(id);
+            var entity = await _instructorService.GetInstructorEntityById(id);
 
             return entity;
         }
 
         [HttpPost]
-        public InstructorEntity Post(InstructorEntity instructorEntity)
+        public async Task<InstructorEntity> Post(InstructorEntity instructorEntity)
         {
-            _context.Instructors.Add(instructorEntity);
-            _context.SaveChanges();
-
-            return instructorEntity;
-        }
-
-        [HttpPut]
-        public InstructorEntity Put(InstructorEntity instructorEntity)
-        {
-            GetEntity(instructorEntity.Id);
-
-            _context.Instructors.Update(instructorEntity);
-            _context.SaveChanges();
-
-            return instructorEntity;
-        }
-
-        [HttpDelete("{id:int}")]
-        public void Delete(int id)
-        {
-            var entity = GetEntity(id);
-
-            _context.Instructors.Remove(entity);
-            _context.SaveChanges();
-        }
-
-        private InstructorEntity GetEntity(int id)
-        {
-            var entity = _context.Instructors.Find(id);
-
-            if (entity is null)
-            {
-                throw new EntityNotFoundException($"Instructor with id: {id} not found");
-            }
+            var entity = await _instructorService.CreateInstructorEntity(instructorEntity);
 
             return entity;
         }
+
+        [HttpPut]
+        public async Task<InstructorEntity> Put(InstructorEntity instructorEntity)
+        {
+            var result = await _instructorService.UpdateInstructorEntity(instructorEntity);
+
+            return result;
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task Delete(int id)
+        {
+            await _instructorService.DeleteInstructorEntity(id);
+        }
     }
 }
+

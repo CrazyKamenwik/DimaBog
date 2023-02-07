@@ -1,4 +1,4 @@
-﻿namespace SkyDrive.Interfaces
+﻿namespace SkyDrive.BLL.Interfaces
 {
     public interface IEntity
     {

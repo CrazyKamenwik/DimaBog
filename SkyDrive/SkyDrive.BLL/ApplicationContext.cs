@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SkyDrive.Entities;
+using SkyDrive.BLL.Entities;
 
-namespace SkyDrive
+namespace SkyDrive.BLL
 {
     public sealed class ApplicationContext : DbContext
     {

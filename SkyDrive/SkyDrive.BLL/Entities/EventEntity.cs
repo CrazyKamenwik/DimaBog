@@ -1,6 +1,6 @@
-﻿using SkyDrive.Interfaces;
+﻿using SkyDrive.BLL.Interfaces;
 
-namespace SkyDrive.Entities
+namespace SkyDrive.BLL.Entities
 {
     public class EventEntity : IEntity
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SkyDrive.Entities;
-using SkyDrive.Exceptions;
+using SkyDrive.BLL.Entities;
+using SkyDrive.BLL.Interfaces;
 
 namespace SkyDrive.Controllers
 {
@@ -9,66 +9,49 @@ namespace SkyDrive.Controllers
     public class MemberController : ControllerBase
     {
         private readonly ILogger<MemberController> _logger;
-        private readonly ApplicationContext _context;
+        private readonly IMemberService _memberService;
 
-        public MemberController(ILogger<MemberController> logger, ApplicationContext context)
+        public MemberController(ILogger<MemberController> logger, IMemberService memberService)
         {
-            _context = context;
+            _memberService = memberService;
             _logger = logger;
         }
         [HttpGet]
-        public List<MemberEntity> GetAll()
+        public async Task<IEnumerable<MemberEntity>> GetAll()
         {
-            return _context.Members.ToList();
+            return await _memberService.GetAllMemberEntities();
         }
 
         [HttpGet("{id:int}")]
-        public MemberEntity? GetById(int id)
+        public async Task<MemberEntity?> GetById(int id)
         {
-            var entity = GetEntity(id);
+            var entity = await _memberService.GetMemberEntityById(id);
 
             return entity;
         }
 
         [HttpPost]
-        public MemberEntity Post(MemberEntity memberEntity)
+        public async Task<MemberEntity> Post(MemberEntity memberEntity)
         {
-            _context.Members.Add(memberEntity);
-            _context.SaveChanges();
+            var result = await _memberService.CreateMemberEntity(memberEntity);
 
-            return memberEntity;
+            return result;
         }
 
         [HttpPut]
-        public MemberEntity Put(MemberEntity memberEntity)
+        public async Task<MemberEntity> Put(MemberEntity memberEntity)
         {
-            var entity = GetEntity(memberEntity.Id);
-
-            _context.Members.Update(memberEntity);
-            _context.SaveChanges();
-
-            return memberEntity;
-        }
-
-        [HttpDelete("{id:int}")]
-        public void Delete(int id)
-        {
-            var entity = GetEntity(id);
-
-            _context.Members.Remove(entity!);
-            _context.SaveChanges();
-        }
-
-        private MemberEntity GetEntity(int id)
-        {
-            var entity = _context.Members.Find(id);
-
-            if (entity is null)
-            {
-                throw new EntityNotFoundException($"Member with id: {id} not found");
-            }
+            var entity = await _memberService.UpdateMemberEntity(memberEntity);
 
             return entity;
         }
+
+        [HttpDelete("{id:int}")]
+        public async Task Delete(int id)
+        {
+            await _memberService.DeleteMemberEntity(id);
+        }
+
+
     }
 }
