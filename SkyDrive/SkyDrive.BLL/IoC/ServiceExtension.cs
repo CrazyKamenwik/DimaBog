@@ -10,7 +10,6 @@ namespace SkyDrive.BLL.IoC
     {
         public static IServiceCollection AddContext(this IServiceCollection services, IConfiguration configuration)
         {
-
             services.AddDbContext<ApplicationContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));

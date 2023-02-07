@@ -34,12 +34,12 @@ namespace SkyDrive.BLL.Services
 
         public async Task<MemberEntity> UpdateMemberEntity(MemberEntity memberEntity)
         {
-            var entity = await GetEntity(memberEntity.Id);
+            await GetEntity(memberEntity.Id);
 
-            _context.Members.Update(entity);
+            _context.Members.Update(memberEntity);
             await _context.SaveChangesAsync();
 
-            return entity;
+            return memberEntity;
         }
 
         public async Task DeleteMemberEntity(int id)
