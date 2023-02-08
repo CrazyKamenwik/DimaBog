@@ -1,4 +1,4 @@
-﻿namespace SkyDrive.Interfaces
+﻿namespace SkyDrive.DAL.Interfaces
 {
     public interface IEntity
     {

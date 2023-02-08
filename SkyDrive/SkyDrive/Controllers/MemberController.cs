@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SkyDrive.Entities;
+using SkyDrive.DAL;
+using SkyDrive.DAL.Entities;
 using SkyDrive.Exceptions;
 
 namespace SkyDrive.Controllers

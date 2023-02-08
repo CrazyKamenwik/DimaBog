@@ -1,6 +1,6 @@
-﻿using SkyDrive.Interfaces;
+﻿using SkyDrive.DAL.Interfaces;
 
-namespace SkyDrive.Entities
+namespace SkyDrive.DAL.Entities
 {
     public class MemberEntity : IEntity
     {
