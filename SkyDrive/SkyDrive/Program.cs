@@ -1,13 +1,9 @@
-using Microsoft.EntityFrameworkCore;
-using SkyDrive;
+using SkyDrive.BLL.IoC;
 using SkyDrive.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<ApplicationContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
+builder.Services.AddServices(builder.Configuration);
 
 builder.Services.AddControllers();
 
