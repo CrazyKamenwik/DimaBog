@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SkyDrive.BLL.Interfaces;
+using SkyDrive.BLL.Services;
 using SkyDrive.DAL.IoC;
 
 namespace SkyDrive.BLL.IoC
@@ -10,8 +12,9 @@ namespace SkyDrive.BLL.IoC
         {
             services.AddContext(configuration);
 
+            services.AddScoped<IMemberService, MemberService>();
+
             return services;
         }
-
     }
 }

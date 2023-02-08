@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SkyDrive.DAL.Interfaces;
+using SkyDrive.DAL.Repositories;
 
 namespace SkyDrive.DAL.IoC
 {
@@ -12,6 +14,15 @@ namespace SkyDrive.DAL.IoC
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
+
+            services.AddRepositories();
+
+            return services;
+        }
+
+        public static IServiceCollection AddRepositories(this IServiceCollection services)
+        {
+            services.AddScoped<IMemberRepository, MemberRepository>();
 
             return services;
         }
