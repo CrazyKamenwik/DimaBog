@@ -15,12 +15,12 @@ namespace SkyDrive.DAL.Repositories
 
         public async Task<IEnumerable<MemberEntity>> GetAllMembers()
         {
-            return await _context.Members.ToListAsync();
+            return await _context.Members.AsNoTracking().ToListAsync();
         }
 
         public async Task<MemberEntity?> GetMemberById(int id)
         {
-            return await _context.Members.FindAsync(id);
+            return await _context.Members.AsNoTracking().SingleOrDefaultAsync(e => e.Id == id);
         }
 
         public async Task<MemberEntity> CreateMember(MemberEntity memberEntity)
