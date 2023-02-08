@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkyDrive", "SkyDrive\SkyDri
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkyDrive.BLL", "SkyDrive.BLL\SkyDrive.BLL.csproj", "{1D4C8999-EFA6-4B27-96F0-2BA22D4089E0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkyDrive.DAL", "DAL\SkyDrive.DAL.csproj", "{6B81F81B-32A1-48F0-9829-DDC7B54ED4F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkyDrive.DAL", "SkyDrive.DAL\SkyDrive.DAL.csproj", "{8F867E32-C12A-47D9-9811-2E14EAFAD919}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{1D4C8999-EFA6-4B27-96F0-2BA22D4089E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D4C8999-EFA6-4B27-96F0-2BA22D4089E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D4C8999-EFA6-4B27-96F0-2BA22D4089E0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6B81F81B-32A1-48F0-9829-DDC7B54ED4F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6B81F81B-32A1-48F0-9829-DDC7B54ED4F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6B81F81B-32A1-48F0-9829-DDC7B54ED4F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6B81F81B-32A1-48F0-9829-DDC7B54ED4F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F867E32-C12A-47D9-9811-2E14EAFAD919}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F867E32-C12A-47D9-9811-2E14EAFAD919}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F867E32-C12A-47D9-9811-2E14EAFAD919}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F867E32-C12A-47D9-9811-2E14EAFAD919}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

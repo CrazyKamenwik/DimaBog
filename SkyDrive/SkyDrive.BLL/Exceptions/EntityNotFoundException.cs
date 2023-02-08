@@ -1,4 +1,4 @@
-﻿namespace SkyDrive.Exceptions
+﻿namespace SkyDrive.BLL.Exceptions
 {
     public class EntityNotFoundException : Exception
     {

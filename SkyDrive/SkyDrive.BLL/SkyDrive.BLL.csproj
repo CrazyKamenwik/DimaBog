@@ -7,9 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\" />
     <Folder Include="IoC\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DAL\SkyDrive.DAL.csproj" />
+    <ProjectReference Include="..\SkyDrive.DAL\SkyDrive.DAL.csproj" />
   </ItemGroup>
 
 </Project>
