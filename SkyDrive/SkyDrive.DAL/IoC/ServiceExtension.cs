@@ -23,6 +23,8 @@ namespace SkyDrive.DAL.IoC
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<IMemberRepository, MemberRepository>();
+            services.AddScoped<IEventRepository, EventRepository>();
+            services.AddScoped<IInstructorRepository, InstructorRepository>();
 
             return services;
         }
