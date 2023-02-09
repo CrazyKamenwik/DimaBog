@@ -24,6 +24,7 @@ namespace SkyDrive.DAL.IoC
         {
             services.AddScoped<IMemberRepository, MemberRepository>();
             services.AddScoped<IEventRepository, EventRepository>();
+            services.AddScoped<IInstructorRepository, InstructorRepository>();
 
             return services;
         }
