@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SkyDrive.BLL.Exceptions;
-using SkyDrive.DAL;
+using SkyDrive.BLL.Interfaces;
 using SkyDrive.DAL.Entities;
 
 namespace SkyDrive.Controllers
@@ -10,67 +9,42 @@ namespace SkyDrive.Controllers
     public class EventController : ControllerBase
     {
         private readonly ILogger<EventController> _logger;
-        private readonly ApplicationContext _context;
+        private readonly IEventService _service;
 
-        public EventController(ILogger<EventController> logger, ApplicationContext context)
+        public EventController(ILogger<EventController> logger, IEventService service)
         {
-            _context = context;
+            _service = service;
             _logger = logger;
         }
 
         [HttpGet]
-        public List<EventEntity> GetAll()
+        public async Task<IEnumerable<EventEntity>> GetAllEvents()
         {
-            return _context.Events.ToList();
+            return await _service.GetAllEvents();
         }
 
         [HttpGet("{id:int}")]
-        public EventEntity GetById(int id)
+        public async Task<EventEntity> GetEventById(int id)
         {
-            var entity = GetEntity(id);
-
-            return entity;
+            return await _service.GetEventById(id);
         }
 
         [HttpPost]
-        public EventEntity Post(EventEntity eventEntity)
+        public async Task<EventEntity> CreateEvent(EventEntity eventEntity)
         {
-            _context.Events.Add(eventEntity);
-            _context.SaveChanges();
-
-            return eventEntity;
+            return await _service.CreateEvent(eventEntity);
         }
 
         [HttpPut]
-        public EventEntity Put(EventEntity eventEntity)
+        public async Task<EventEntity> UpdateEvent(EventEntity eventEntity)
         {
-            GetEntity(eventEntity.Id);
-
-            _context.Events.Update(eventEntity);
-            _context.SaveChanges();
-
-            return eventEntity;
+            return await _service.UpdateEvent(eventEntity);
         }
 
         [HttpDelete("{id:int}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var entity = GetEntity(id);
-
-            _context.Events.Remove(entity!);
-            _context.SaveChanges();
-        }
-
-        private EventEntity GetEntity(int id)
-        {
-            var entity = _context.Events.Find(id);
-
-            if (entity is null)
-            {
-                throw new EntityNotFoundException($"Event with id: {id} not found");
-            }
-
-            return entity;
+            await _service.DeleteEvent(id);
         }
     }
 }

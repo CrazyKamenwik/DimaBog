@@ -13,6 +13,7 @@ namespace SkyDrive.BLL.IoC
             services.AddContext(configuration);
 
             services.AddScoped<IMemberService, MemberService>();
+            services.AddScoped<IEventService, EventService>();
 
             return services;
         }
