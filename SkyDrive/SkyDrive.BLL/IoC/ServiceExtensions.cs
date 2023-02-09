@@ -14,7 +14,7 @@ namespace SkyDrive.BLL.IoC
 
             services.AddScoped<IMemberService, MemberService>();
             services.AddScoped<IEventService, EventService>();
-            services.AddScoped<IInstructorSerivce, InstructorService>();
+            services.AddScoped<IInstructorService, InstructorService>();
 
             return services;
         }
