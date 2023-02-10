@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Mapster;
+using Microsoft.AspNetCore.Mvc;
 using SkyDrive.BLL.Interfaces;
-using SkyDrive.DAL.Entities;
+using SkyDrive.BLL.Models;
+using SkyDrive.ViewModels;
 
 namespace SkyDrive.Controllers
 {
@@ -17,27 +19,39 @@ namespace SkyDrive.Controllers
             _logger = logger;
         }
         [HttpGet]
-        public async Task<IEnumerable<MemberEntity>> GetAllMembers()
+        public async Task<IEnumerable<MemberViewModel>> GetAllMembers()
         {
-            return await _service.GetAllMember();
+            var memberModels = await _service.GetAllMembers();
+
+            return memberModels.Adapt<IEnumerable<MemberViewModel>>();
         }
 
         [HttpGet("{id:int}")]
-        public async Task<MemberEntity> GetMemberById(int id)
+        public async Task<MemberViewModel> GetMemberById(int id)
         {
-            return await _service.GetMemberById(id);
+            var memberModel = await _service.GetMemberById(id);
+
+            return memberModel.Adapt<MemberViewModel>();
         }
 
         [HttpPost]
-        public async Task<MemberEntity> CreateMember(MemberEntity memberEntity)
+        public async Task<MemberViewModel> CreateMember(MemberViewModel memberViewModel)
         {
-            return await _service.CreateMember(memberEntity);
+            var memberModel = memberViewModel.Adapt<MemberModel>();
+
+            var memberViewModelResult = await _service.CreateMember(memberModel);
+
+            return memberViewModelResult.Adapt<MemberViewModel>();
         }
 
         [HttpPut]
-        public async Task<MemberEntity> UpdateMember(MemberEntity memberEntity)
+        public async Task<MemberViewModel> UpdateMember(MemberViewModel memberViewModel)
         {
-            return await _service.UpdateMember(memberEntity);
+            var memberModel = memberViewModel.Adapt<MemberModel>();
+
+            var memberViewModelResult = await _service.UpdateMember(memberModel);
+
+            return memberViewModelResult.Adapt<MemberViewModel>();
         }
 
         [HttpDelete("{id:int}")]
