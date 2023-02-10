@@ -25,7 +25,14 @@ namespace SkyDrive.BLL.Services
 
         public async Task<MemberModel> GetMemberById(int id)
         {
-            return await GetEntity(id);
+            var entity = await _memberRepository.GetMemberById(id);
+
+            if (entity is null)
+            {
+                throw new EntityNotFoundException($"Member with id: {id} not found");
+            }
+
+            return entity.Adapt<MemberModel>();
         }
 
         public async Task<MemberModel> CreateMember(MemberModel memberModel)
@@ -38,7 +45,7 @@ namespace SkyDrive.BLL.Services
 
         public async Task<MemberModel> UpdateMember(MemberModel memberModel)
         {
-            await GetEntity(memberModel.Id);
+            await GetMemberById(memberModel.Id);
 
             var memberEntity = memberModel.Adapt<MemberEntity>();
 
@@ -49,21 +56,9 @@ namespace SkyDrive.BLL.Services
 
         public async Task DeleteMember(int id)
         {
-            var memberModel = await GetEntity(id);
+            var memberModel = await GetMemberById(id);
 
             await _memberRepository.DeleteMember(memberModel.Adapt<MemberEntity>());
-        }
-
-        private async Task<MemberModel> GetEntity(int id)
-        {
-            var entity = await _memberRepository.GetMemberById(id);
-
-            if (entity is null)
-            {
-                throw new EntityNotFoundException($"Member with id: {id} not found");
-            }
-
-            return entity.Adapt<MemberModel>();
         }
     }
 }
