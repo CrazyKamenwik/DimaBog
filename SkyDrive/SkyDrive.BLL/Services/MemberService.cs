@@ -41,6 +41,7 @@ namespace SkyDrive.BLL.Services
             await GetEntity(memberModel.Id);
 
             var memberEntity = memberModel.Adapt<MemberEntity>();
+
             var memberEntityResult = await _repository.UpdateMember(memberEntity);
 
             return memberEntityResult.Adapt<MemberModel>();
