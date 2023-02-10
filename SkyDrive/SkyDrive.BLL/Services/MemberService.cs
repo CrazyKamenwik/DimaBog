@@ -1,5 +1,7 @@
-﻿using SkyDrive.BLL.Exceptions;
+﻿using Mapster;
+using SkyDrive.BLL.Exceptions;
 using SkyDrive.BLL.Interfaces;
+using SkyDrive.BLL.Models;
 using SkyDrive.DAL.Entities;
 using SkyDrive.DAL.Interfaces;
 
@@ -7,52 +9,56 @@ namespace SkyDrive.BLL.Services
 {
     public class MemberService : IMemberService
     {
-        private readonly IMemberRepository _repository;
+        private readonly IMemberRepository _memberRepository;
 
-        public MemberService(IMemberRepository repository)
+        public MemberService(IMemberRepository memberRepository)
         {
-            _repository = repository;
+            _memberRepository = memberRepository;
         }
 
-        public async Task<IEnumerable<MemberEntity>> GetAllMember()
+        public async Task<IEnumerable<MemberModel>> GetAllMembers()
         {
-            return await _repository.GetAllMembers();
+            var memberEntities = await _memberRepository.GetAllMembers();
+
+            return memberEntities.Adapt<IEnumerable<MemberModel>>();
         }
 
-        public async Task<MemberEntity> GetMemberById(int id)
+        public async Task<MemberModel> GetMemberById(int id)
         {
-            return await GetEntity(id);
-        }
-
-        public async Task<MemberEntity> CreateMember(MemberEntity memberEntity)
-        {
-            return await _repository.CreateMember(memberEntity);
-        }
-
-        public async Task<MemberEntity> UpdateMember(MemberEntity memberEntity)
-        {
-            await GetEntity(memberEntity.Id);
-
-            return await _repository.UpdateMember(memberEntity);
-        }
-
-        public async Task DeleteMember(int id)
-        {
-            var memberEntity = await GetEntity(id);
-
-            await _repository.DeleteMember(memberEntity);
-        }
-
-        private async Task<MemberEntity> GetEntity(int id)
-        {
-            var entity = await _repository.GetMemberById(id);
+            var entity = await _memberRepository.GetMemberById(id);
 
             if (entity is null)
             {
                 throw new EntityNotFoundException($"Member with id: {id} not found");
             }
 
-            return entity;
+            return entity.Adapt<MemberModel>();
+        }
+
+        public async Task<MemberModel> CreateMember(MemberModel memberModel)
+        {
+            var memberEntity = memberModel.Adapt<MemberEntity>();
+            var memberEntityResult = await _memberRepository.CreateMember(memberEntity);
+
+            return memberEntityResult.Adapt<MemberModel>();
+        }
+
+        public async Task<MemberModel> UpdateMember(MemberModel memberModel)
+        {
+            await GetMemberById(memberModel.Id);
+
+            var memberEntity = memberModel.Adapt<MemberEntity>();
+
+            var memberEntityResult = await _memberRepository.UpdateMember(memberEntity);
+
+            return memberEntityResult.Adapt<MemberModel>();
+        }
+
+        public async Task DeleteMember(int id)
+        {
+            var memberModel = await GetMemberById(id);
+
+            await _memberRepository.DeleteMember(memberModel.Adapt<MemberEntity>());
         }
     }
 }
