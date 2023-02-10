@@ -8,6 +8,5 @@
         public string LastName { get; set; } = null!;
 
         public ICollection<EventViewModel>? Events { get; set; }
-
     }
 }

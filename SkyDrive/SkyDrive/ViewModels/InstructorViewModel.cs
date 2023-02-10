@@ -9,6 +9,5 @@
         public int Experience { get; set; }
 
         public ICollection<EventViewModel>? Events { get; set; }
-
     }
 }
