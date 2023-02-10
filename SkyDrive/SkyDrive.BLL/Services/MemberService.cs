@@ -9,16 +9,16 @@ namespace SkyDrive.BLL.Services
 {
     public class MemberService : IMemberService
     {
-        private readonly IMemberRepository _repository;
+        private readonly IMemberRepository _memberRepository;
 
-        public MemberService(IMemberRepository repository)
+        public MemberService(IMemberRepository memberRepository)
         {
-            _repository = repository;
+            _memberRepository = memberRepository;
         }
 
         public async Task<IEnumerable<MemberModel>> GetAllMembers()
         {
-            var memberEntities = await _repository.GetAllMembers();
+            var memberEntities = await _memberRepository.GetAllMembers();
 
             return memberEntities.Adapt<IEnumerable<MemberModel>>();
         }
@@ -31,7 +31,7 @@ namespace SkyDrive.BLL.Services
         public async Task<MemberModel> CreateMember(MemberModel memberModel)
         {
             var memberEntity = memberModel.Adapt<MemberEntity>();
-            var memberEntityResult = await _repository.CreateMember(memberEntity);
+            var memberEntityResult = await _memberRepository.CreateMember(memberEntity);
 
             return memberEntityResult.Adapt<MemberModel>();
         }
@@ -42,7 +42,7 @@ namespace SkyDrive.BLL.Services
 
             var memberEntity = memberModel.Adapt<MemberEntity>();
 
-            var memberEntityResult = await _repository.UpdateMember(memberEntity);
+            var memberEntityResult = await _memberRepository.UpdateMember(memberEntity);
 
             return memberEntityResult.Adapt<MemberModel>();
         }
@@ -51,12 +51,12 @@ namespace SkyDrive.BLL.Services
         {
             var memberEntity = await GetEntity(id);
 
-            await _repository.DeleteMember(memberEntity.Adapt<MemberEntity>());
+            await _memberRepository.DeleteMember(memberEntity.Adapt<MemberEntity>());
         }
 
         private async Task<MemberModel> GetEntity(int id)
         {
-            var entity = await _repository.GetMemberById(id);
+            var entity = await _memberRepository.GetMemberById(id);
 
             if (entity is null)
             {
