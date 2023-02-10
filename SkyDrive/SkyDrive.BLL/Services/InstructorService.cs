@@ -1,5 +1,7 @@
-﻿using SkyDrive.BLL.Exceptions;
+﻿using Mapster;
+using SkyDrive.BLL.Exceptions;
 using SkyDrive.BLL.Interfaces;
+using SkyDrive.BLL.Models;
 using SkyDrive.DAL.Entities;
 using SkyDrive.DAL.Interfaces;
 
@@ -14,36 +16,14 @@ namespace SkyDrive.BLL.Services
             _instructorRepository = repository;
         }
 
-        public async Task<IEnumerable<InstructorEntity>> GetAllInstructors()
+        public async Task<IEnumerable<InstructorModel>> GetAllInstructors()
         {
-            return await _instructorRepository.GetAllInstructors();
+            var instructorEntities = await _instructorRepository.GetAllInstructors();
+
+            return instructorEntities.Adapt<IEnumerable<InstructorModel>>();
         }
 
-        public async Task<InstructorEntity> GetInstructorById(int id)
-        {
-            return await GetEntity(id);
-        }
-
-        public async Task<InstructorEntity> CreateInstructor(InstructorEntity instructorEntity)
-        {
-            return await _instructorRepository.CreateInstructor(instructorEntity);
-        }
-
-        public async Task<InstructorEntity> UpdateInstructor(InstructorEntity instructorEntity)
-        {
-            await GetEntity(instructorEntity.Id);
-
-            return await _instructorRepository.UpdateInstructor(instructorEntity);
-        }
-
-        public async Task DeleteInstructor(int id)
-        {
-            var instructorEntity = await GetEntity(id);
-
-            await _instructorRepository.DeleteInstructor(instructorEntity);
-        }
-
-        private async Task<InstructorEntity> GetEntity(int id)
+        public async Task<InstructorModel> GetInstructorById(int id)
         {
             var entity = await _instructorRepository.GetInstructorById(id);
 
@@ -52,7 +32,33 @@ namespace SkyDrive.BLL.Services
                 throw new EntityNotFoundException($"Instructor with id: {id} not found");
             }
 
-            return entity;
+            return entity.Adapt<InstructorModel>();
+        }
+
+        public async Task<InstructorModel> CreateInstructor(InstructorModel instructorModel)
+        {
+            var instructorEntity = instructorModel.Adapt<InstructorEntity>();
+            var instructorEntityResult = await _instructorRepository.CreateInstructor(instructorEntity);
+
+            return instructorEntityResult.Adapt<InstructorModel>();
+        }
+
+        public async Task<InstructorModel> UpdateInstructor(InstructorModel instructorModel)
+        {
+            await GetInstructorById(instructorModel.Id);
+
+            var instructorEntity = instructorModel.Adapt<InstructorEntity>();
+
+            var instructorEntityResult = await _instructorRepository.UpdateInstructor(instructorEntity);
+
+            return instructorEntityResult.Adapt<InstructorModel>();
+        }
+
+        public async Task DeleteInstructor(int id)
+        {
+            var instructorModel = await GetInstructorById(id);
+
+            await _instructorRepository.DeleteInstructor(instructorModel.Adapt<InstructorEntity>());
         }
     }
 }

@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Mapster;
+using Microsoft.AspNetCore.Mvc;
 using SkyDrive.BLL.Interfaces;
-using SkyDrive.DAL.Entities;
+using SkyDrive.BLL.Models;
+using SkyDrive.ViewModels;
 
 namespace SkyDrive.Controllers
 {
@@ -18,27 +20,39 @@ namespace SkyDrive.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<InstructorEntity>> GetAllInstructors()
+        public async Task<IEnumerable<InstructorViewModel>> GetAllInstructors()
         {
-            return await _service.GetAllInstructors();
+            var instructorModels = await _service.GetAllInstructors();
+
+            return instructorModels.Adapt<IEnumerable<InstructorViewModel>>();
         }
 
         [HttpGet("{id:int}")]
-        public async Task<InstructorEntity> GetInstructorById(int id)
+        public async Task<InstructorViewModel> GetInstructorById(int id)
         {
-            return await _service.GetInstructorById(id);
+            var instructorModel = await _service.GetInstructorById(id);
+
+            return instructorModel.Adapt<InstructorViewModel>();
         }
 
         [HttpPost]
-        public async Task<InstructorEntity> CreateInstructor(InstructorEntity instructorEntity)
+        public async Task<InstructorViewModel> CreateInstructor(InstructorViewModel instructorViewModel)
         {
-            return await _service.CreateInstructor(instructorEntity);
+            var instructorModel = instructorViewModel.Adapt<InstructorModel>();
+
+            var instructorViewModelResult = await _service.CreateInstructor(instructorModel);
+
+            return instructorViewModel.Adapt<InstructorViewModel>();
         }
 
         [HttpPut]
-        public async Task<InstructorEntity> UpdateInstructor(InstructorEntity instructorEntity)
+        public async Task<InstructorViewModel> UpdateInstructor(InstructorViewModel instructorViewModel)
         {
-            return await _service.UpdateInstructor(instructorEntity);
+            var instructorModel = instructorViewModel.Adapt<InstructorModel>();
+
+            var instructorViewModelResult = await _service.UpdateInstructor(instructorModel);
+
+            return instructorViewModelResult.Adapt<InstructorViewModel>();
         }
 
         [HttpDelete("{id:int}")]

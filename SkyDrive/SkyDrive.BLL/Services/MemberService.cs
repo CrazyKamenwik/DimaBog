@@ -38,6 +38,7 @@ namespace SkyDrive.BLL.Services
         public async Task<MemberModel> CreateMember(MemberModel memberModel)
         {
             var memberEntity = memberModel.Adapt<MemberEntity>();
+
             var memberEntityResult = await _memberRepository.CreateMember(memberEntity);
 
             return memberEntityResult.Adapt<MemberModel>();
