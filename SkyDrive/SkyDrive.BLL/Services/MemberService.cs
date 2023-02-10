@@ -49,9 +49,9 @@ namespace SkyDrive.BLL.Services
 
         public async Task DeleteMember(int id)
         {
-            var memberEntity = await GetEntity(id);
+            var memberModel = await GetEntity(id);
 
-            await _memberRepository.DeleteMember(memberEntity.Adapt<MemberEntity>());
+            await _memberRepository.DeleteMember(memberModel.Adapt<MemberEntity>());
         }
 
         private async Task<MemberModel> GetEntity(int id)
