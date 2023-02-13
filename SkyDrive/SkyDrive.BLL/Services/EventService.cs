@@ -18,14 +18,14 @@ namespace SkyDrive.BLL.Services
 
         public async Task<IEnumerable<EventModel>> GetAllEvents()
         {
-            var eventEntities = await _eventRepository.GetAllEvents();
+            var eventEntities = await _eventRepository.GetAll();
 
             return eventEntities.Adapt<IEnumerable<EventModel>>();
         }
 
         public async Task<EventModel> GetEventById(int id)
         {
-            var entity = await _eventRepository.GetEventById(id);
+            var entity = await _eventRepository.GetById(id);
 
             if (entity is null)
             {
@@ -39,7 +39,7 @@ namespace SkyDrive.BLL.Services
         {
             var eventEntity = eventModel.Adapt<EventEntity>();
 
-            var eventEntityResult = await _eventRepository.CreateEvent(eventEntity);
+            var eventEntityResult = await _eventRepository.Create(eventEntity);
 
             return eventEntityResult.Adapt<EventModel>();
         }
@@ -50,7 +50,7 @@ namespace SkyDrive.BLL.Services
 
             var eventEntity = eventModel.Adapt<EventEntity>();
 
-            var eventEntityResult = await _eventRepository.UpdateEvent(eventEntity);
+            var eventEntityResult = await _eventRepository.Update(eventEntity);
 
             return eventEntityResult.Adapt<EventModel>();
         }
@@ -59,7 +59,7 @@ namespace SkyDrive.BLL.Services
         {
             var eventModel = await GetEventById(id);
 
-            await _eventRepository.DeleteEvent(eventModel.Adapt<EventEntity>());
+            await _eventRepository.Delete(eventModel.Adapt<EventEntity>());
         }
     }
 }

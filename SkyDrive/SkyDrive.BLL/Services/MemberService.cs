@@ -18,14 +18,14 @@ namespace SkyDrive.BLL.Services
 
         public async Task<IEnumerable<MemberModel>> GetAllMembers()
         {
-            var memberEntities = await _memberRepository.GetAllMembers();
+            var memberEntities = await _memberRepository.GetAll();
 
             return memberEntities.Adapt<IEnumerable<MemberModel>>();
         }
 
         public async Task<MemberModel> GetMemberById(int id)
         {
-            var entity = await _memberRepository.GetMemberById(id);
+            var entity = await _memberRepository.GetById(id);
 
             if (entity is null)
             {
@@ -39,7 +39,7 @@ namespace SkyDrive.BLL.Services
         {
             var memberEntity = memberModel.Adapt<MemberEntity>();
 
-            var memberEntityResult = await _memberRepository.CreateMember(memberEntity);
+            var memberEntityResult = await _memberRepository.Create(memberEntity);
 
             return memberEntityResult.Adapt<MemberModel>();
         }
@@ -50,7 +50,7 @@ namespace SkyDrive.BLL.Services
 
             var memberEntity = memberModel.Adapt<MemberEntity>();
 
-            var memberEntityResult = await _memberRepository.UpdateMember(memberEntity);
+            var memberEntityResult = await _memberRepository.Update(memberEntity);
 
             return memberEntityResult.Adapt<MemberModel>();
         }
@@ -59,7 +59,7 @@ namespace SkyDrive.BLL.Services
         {
             var memberModel = await GetMemberById(id);
 
-            await _memberRepository.DeleteMember(memberModel.Adapt<MemberEntity>());
+            await _memberRepository.Delete(memberModel.Adapt<MemberEntity>());
         }
     }
 }
