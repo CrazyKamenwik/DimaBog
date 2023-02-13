@@ -1,9 +1,12 @@
 using SkyDrive.BLL.IoC;
+using SkyDrive.IoC;
 using SkyDrive.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddServices(builder.Configuration);
+
+builder.Services.AddValidators();
 
 builder.Services.AddControllers();
 

@@ -1,4 +1,5 @@
-﻿using Mapster;
+﻿using FluentValidation;
+using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using SkyDrive.BLL.Interfaces;
 using SkyDrive.BLL.Models;
@@ -12,11 +13,13 @@ namespace SkyDrive.Controllers
     {
         private readonly ILogger<EventController> _logger;
         private readonly IEventService _service;
+        private readonly IValidator<EventViewModel> _validator;
 
-        public EventController(ILogger<EventController> logger, IEventService service)
+        public EventController(ILogger<EventController> logger, IEventService service, IValidator<EventViewModel> validator)
         {
             _service = service;
             _logger = logger;
+            _validator = validator;
         }
 
         [HttpGet]
@@ -38,6 +41,8 @@ namespace SkyDrive.Controllers
         [HttpPost]
         public async Task<EventViewModel> CreateEvent(EventViewModel eventViewModel)
         {
+            await _validator.ValidateAndThrowAsync(eventViewModel);
+
             var eventModel = eventViewModel.Adapt<EventModel>();
 
             var eventViewModelResult = await _service.CreateEvent(eventModel);
@@ -48,6 +53,8 @@ namespace SkyDrive.Controllers
         [HttpPut]
         public async Task<EventViewModel> UpdateEvent(EventViewModel eventViewModel)
         {
+            await _validator.ValidateAndThrowAsync(eventViewModel);
+
             var eventModel = eventViewModel.Adapt<EventModel>();
 
             var eventViewModelResult = await _service.UpdateEvent(eventModel);
