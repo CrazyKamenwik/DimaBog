@@ -6,7 +6,7 @@ using SkyDrive.DAL.Repositories;
 
 namespace SkyDrive.DAL.IoC
 {
-    public static class ServiceExtension
+    public static class ServiceExtensions
     {
         public static IServiceCollection AddContext(this IServiceCollection services, IConfiguration configuration)
         {

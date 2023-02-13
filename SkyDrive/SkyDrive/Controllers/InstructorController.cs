@@ -1,4 +1,5 @@
-﻿using Mapster;
+using FluentValidation;
+using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using SkyDrive.BLL.Interfaces;
 using SkyDrive.BLL.Models;
@@ -12,11 +13,13 @@ namespace SkyDrive.Controllers
     {
         private readonly ILogger<InstructorController> _logger;
         private readonly IInstructorService _service;
+        private readonly IValidator<InstructorViewModel> _validator;
 
-        public InstructorController(ILogger<InstructorController> logger, IInstructorService service)
+        public InstructorController(ILogger<InstructorController> logger, IInstructorService service, IValidator<InstructorViewModel> validator)
         {
             _service = service;
             _logger = logger;
+            _validator = validator;
         }
 
         [HttpGet]
@@ -38,16 +41,20 @@ namespace SkyDrive.Controllers
         [HttpPost]
         public async Task<InstructorViewModel> CreateInstructor(InstructorViewModel instructorViewModel)
         {
+            await _validator.ValidateAndThrowAsync(instructorViewModel);
+
             var instructorModel = instructorViewModel.Adapt<InstructorModel>();
 
             var instructorViewModelResult = await _service.CreateInstructor(instructorModel);
 
-            return instructorViewModel.Adapt<InstructorViewModel>();
+            return instructorViewModelResult.Adapt<InstructorViewModel>();
         }
 
         [HttpPut]
         public async Task<InstructorViewModel> UpdateInstructor(InstructorViewModel instructorViewModel)
         {
+            await _validator.ValidateAndThrowAsync(instructorViewModel);
+
             var instructorModel = instructorViewModel.Adapt<InstructorModel>();
 
             var instructorViewModelResult = await _service.UpdateInstructor(instructorModel);

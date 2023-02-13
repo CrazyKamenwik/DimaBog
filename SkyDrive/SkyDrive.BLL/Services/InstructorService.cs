@@ -38,7 +38,7 @@ namespace SkyDrive.BLL.Services
         public async Task<InstructorModel> CreateInstructor(InstructorModel instructorModel)
         {
             var instructorEntity = instructorModel.Adapt<InstructorEntity>();
-            
+
             var instructorEntityResult = await _instructorRepository.Create(instructorEntity);
 
             return instructorEntityResult.Adapt<InstructorModel>();
