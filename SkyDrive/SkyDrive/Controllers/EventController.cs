@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Mapster;
+using Microsoft.AspNetCore.Mvc;
 using SkyDrive.BLL.Interfaces;
-using SkyDrive.DAL.Entities;
+using SkyDrive.BLL.Models;
+using SkyDrive.ViewModels;
 
 namespace SkyDrive.Controllers
 {
@@ -18,27 +20,39 @@ namespace SkyDrive.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<EventEntity>> GetAllEvents()
+        public async Task<IEnumerable<EventViewModel>> GetAllEvents()
         {
-            return await _service.GetAllEvents();
+            var eventModels = await _service.GetAllEvents();
+
+            return eventModels.Adapt<IEnumerable<EventViewModel>>();
         }
 
         [HttpGet("{id:int}")]
-        public async Task<EventEntity> GetEventById(int id)
+        public async Task<EventViewModel> GetEventById(int id)
         {
-            return await _service.GetEventById(id);
+            var eventModel = await _service.GetEventById(id);
+
+            return eventModel.Adapt<EventViewModel>();
         }
 
         [HttpPost]
-        public async Task<EventEntity> CreateEvent(EventEntity eventEntity)
+        public async Task<EventViewModel> CreateEvent(EventViewModel eventViewModel)
         {
-            return await _service.CreateEvent(eventEntity);
+            var eventModel = eventViewModel.Adapt<EventModel>();
+
+            var eventViewModelResult = await _service.CreateEvent(eventModel);
+
+            return eventViewModelResult.Adapt<EventViewModel>();
         }
 
         [HttpPut]
-        public async Task<EventEntity> UpdateEvent(EventEntity eventEntity)
+        public async Task<EventViewModel> UpdateEvent(EventViewModel eventViewModel)
         {
-            return await _service.UpdateEvent(eventEntity);
+            var eventModel = eventViewModel.Adapt<EventModel>();
+
+            var eventViewModelResult = await _service.UpdateEvent(eventModel);
+
+            return eventViewModelResult.Adapt<EventViewModel>();
         }
 
         [HttpDelete("{id:int}")]

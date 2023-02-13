@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SkyDrive.BLL\SkyDrive.BLL.csproj" />
-    <ProjectReference Include="..\SkyDrive.DAL\SkyDrive.DAL.csproj" />
   </ItemGroup>
 
   <ItemGroup>

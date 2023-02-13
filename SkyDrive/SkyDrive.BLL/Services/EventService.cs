@@ -1,5 +1,7 @@
-﻿using SkyDrive.BLL.Exceptions;
+﻿using Mapster;
+using SkyDrive.BLL.Exceptions;
 using SkyDrive.BLL.Interfaces;
+using SkyDrive.BLL.Models;
 using SkyDrive.DAL.Entities;
 using SkyDrive.DAL.Interfaces;
 
@@ -14,36 +16,14 @@ namespace SkyDrive.BLL.Services
             _eventRepository = repository;
         }
 
-        public async Task<IEnumerable<EventEntity>> GetAllEvents()
+        public async Task<IEnumerable<EventModel>> GetAllEvents()
         {
-            return await _eventRepository.GetAllEvents();
+            var eventEntities = await _eventRepository.GetAllEvents();
+
+            return eventEntities.Adapt<IEnumerable<EventModel>>();
         }
 
-        public async Task<EventEntity> GetEventById(int id)
-        {
-            return await GetEntity(id);
-        }
-
-        public async Task<EventEntity> CreateEvent(EventEntity eventEntity)
-        {
-            return await _eventRepository.CreateEvent(eventEntity);
-        }
-
-        public async Task<EventEntity> UpdateEvent(EventEntity eventEntity)
-        {
-            await GetEntity(eventEntity.Id);
-
-            return await _eventRepository.UpdateEvent(eventEntity);
-        }
-
-        public async Task DeleteEvent(int id)
-        {
-            var eventEntity = await GetEntity(id);
-
-            await _eventRepository.DeleteEvent(eventEntity);
-        }
-
-        private async Task<EventEntity> GetEntity(int id)
+        public async Task<EventModel> GetEventById(int id)
         {
             var entity = await _eventRepository.GetEventById(id);
 
@@ -52,7 +32,34 @@ namespace SkyDrive.BLL.Services
                 throw new EntityNotFoundException($"Event with id: {id} not found");
             }
 
-            return entity;
+            return entity.Adapt<EventModel>();
+        }
+
+        public async Task<EventModel> CreateEvent(EventModel eventModel)
+        {
+            var eventEntity = eventModel.Adapt<EventEntity>();
+
+            var eventEntityResult = await _eventRepository.CreateEvent(eventEntity);
+
+            return eventEntityResult.Adapt<EventModel>();
+        }
+
+        public async Task<EventModel> UpdateEvent(EventModel eventModel)
+        {
+            await GetEventById(eventModel.Id);
+
+            var eventEntity = eventModel.Adapt<EventEntity>();
+
+            var eventEntityResult = await _eventRepository.UpdateEvent(eventEntity);
+
+            return eventEntityResult.Adapt<EventModel>();
+        }
+
+        public async Task DeleteEvent(int id)
+        {
+            var eventModel = await GetEventById(id);
+
+            await _eventRepository.DeleteEvent(eventModel.Adapt<EventEntity>());
         }
     }
 }
