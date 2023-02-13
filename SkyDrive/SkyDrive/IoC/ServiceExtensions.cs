@@ -8,8 +8,6 @@ namespace SkyDrive.IoC
         public static IServiceCollection AddValidators(this IServiceCollection services)
         {
             services.AddValidatorsFromAssemblyContaining<EventValidator>();
-            services.AddValidatorsFromAssemblyContaining<InstructorValidator>();
-            services.AddValidatorsFromAssemblyContaining<MemberValidator>();
 
             return services;
         }
