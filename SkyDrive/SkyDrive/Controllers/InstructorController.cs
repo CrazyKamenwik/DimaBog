@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using SkyDrive.BLL.Interfaces;
