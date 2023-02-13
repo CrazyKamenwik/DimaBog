@@ -1,10 +1,7 @@
-﻿using SkyDrive.DAL.Interfaces;
-
-namespace SkyDrive.DAL.Entities
+﻿namespace SkyDrive.DAL.Entities
 {
-    public class EventEntity : IEntity
+    public class EventEntity : BaseEntity
     {
-        public int Id { get; set; }
         public int InstructorId { get; set; }
         public DateTime DateTimeOfEvent { get; set; }
 

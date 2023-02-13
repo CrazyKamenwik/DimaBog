@@ -18,14 +18,14 @@ namespace SkyDrive.BLL.Services
 
         public async Task<IEnumerable<InstructorModel>> GetAllInstructors()
         {
-            var instructorEntities = await _instructorRepository.GetAllInstructors();
+            var instructorEntities = await _instructorRepository.GetAll();
 
             return instructorEntities.Adapt<IEnumerable<InstructorModel>>();
         }
 
         public async Task<InstructorModel> GetInstructorById(int id)
         {
-            var entity = await _instructorRepository.GetInstructorById(id);
+            var entity = await _instructorRepository.GetById(id);
 
             if (entity is null)
             {
@@ -38,7 +38,7 @@ namespace SkyDrive.BLL.Services
         public async Task<InstructorModel> CreateInstructor(InstructorModel instructorModel)
         {
             var instructorEntity = instructorModel.Adapt<InstructorEntity>();
-            var instructorEntityResult = await _instructorRepository.CreateInstructor(instructorEntity);
+            var instructorEntityResult = await _instructorRepository.Create(instructorEntity);
 
             return instructorEntityResult.Adapt<InstructorModel>();
         }
@@ -49,7 +49,7 @@ namespace SkyDrive.BLL.Services
 
             var instructorEntity = instructorModel.Adapt<InstructorEntity>();
 
-            var instructorEntityResult = await _instructorRepository.UpdateInstructor(instructorEntity);
+            var instructorEntityResult = await _instructorRepository.Update(instructorEntity);
 
             return instructorEntityResult.Adapt<InstructorModel>();
         }
@@ -58,7 +58,7 @@ namespace SkyDrive.BLL.Services
         {
             var instructorModel = await GetInstructorById(id);
 
-            await _instructorRepository.DeleteInstructor(instructorModel.Adapt<InstructorEntity>());
+            await _instructorRepository.Delete(instructorModel.Adapt<InstructorEntity>());
         }
     }
 }
