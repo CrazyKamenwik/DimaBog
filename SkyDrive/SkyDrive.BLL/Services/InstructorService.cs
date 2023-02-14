@@ -16,16 +16,16 @@ namespace SkyDrive.BLL.Services
             _instructorRepository = repository;
         }
 
-        public async Task<IEnumerable<InstructorModel>> GetAllInstructors()
+        public async Task<IEnumerable<InstructorModel>> GetAllInstructors(CancellationToken cancellationToken)
         {
-            var instructorEntities = await _instructorRepository.GetAll();
+            var instructorEntities = await _instructorRepository.GetAll(cancellationToken);
 
             return instructorEntities.Adapt<IEnumerable<InstructorModel>>();
         }
 
-        public async Task<InstructorModel> GetInstructorById(int id)
+        public async Task<InstructorModel> GetInstructorById(int id, CancellationToken cancellationToken)
         {
-            var entity = await _instructorRepository.GetById(id);
+            var entity = await _instructorRepository.GetById(id, cancellationToken);
 
             if (entity is null)
             {
@@ -35,31 +35,31 @@ namespace SkyDrive.BLL.Services
             return entity.Adapt<InstructorModel>();
         }
 
-        public async Task<InstructorModel> CreateInstructor(InstructorModel instructorModel)
+        public async Task<InstructorModel> CreateInstructor(InstructorModel instructorModel, CancellationToken cancellationToken)
         {
             var instructorEntity = instructorModel.Adapt<InstructorEntity>();
 
-            var instructorEntityResult = await _instructorRepository.Create(instructorEntity);
+            var instructorEntityResult = await _instructorRepository.Create(instructorEntity, cancellationToken);
 
             return instructorEntityResult.Adapt<InstructorModel>();
         }
 
-        public async Task<InstructorModel> UpdateInstructor(InstructorModel instructorModel)
+        public async Task<InstructorModel> UpdateInstructor(InstructorModel instructorModel, CancellationToken cancellationToken)
         {
-            await GetInstructorById(instructorModel.Id);
+            await GetInstructorById(instructorModel.Id, cancellationToken);
 
             var instructorEntity = instructorModel.Adapt<InstructorEntity>();
 
-            var instructorEntityResult = await _instructorRepository.Update(instructorEntity);
+            var instructorEntityResult = await _instructorRepository.Update(instructorEntity, cancellationToken);
 
             return instructorEntityResult.Adapt<InstructorModel>();
         }
 
-        public async Task DeleteInstructor(int id)
+        public async Task DeleteInstructor(int id, CancellationToken cancellationToken)
         {
-            var instructorModel = await GetInstructorById(id);
+            var instructorModel = await GetInstructorById(id, cancellationToken);
 
-            await _instructorRepository.Delete(instructorModel.Adapt<InstructorEntity>());
+            await _instructorRepository.Delete(instructorModel.Adapt<InstructorEntity>(), cancellationToken);
         }
     }
 }
