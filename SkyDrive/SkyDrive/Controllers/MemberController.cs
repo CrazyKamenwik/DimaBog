@@ -21,50 +21,51 @@ namespace SkyDrive.Controllers
             _logger = logger;
             _validator = validator;
         }
+
         [HttpGet]
-        public async Task<IEnumerable<MemberViewModel>> GetAllMembers()
+        public async Task<IEnumerable<MemberViewModel>> GetAllMembers(CancellationToken cancellationToken)
         {
-            var memberModels = await _service.GetAllMembers();
+            var memberModels = await _service.GetAllMembers(cancellationToken);
 
             return memberModels.Adapt<IEnumerable<MemberViewModel>>();
         }
 
         [HttpGet("{id:int}")]
-        public async Task<MemberViewModel> GetMemberById(int id)
+        public async Task<MemberViewModel> GetMemberById(int id, CancellationToken cancellationToken)
         {
-            var memberModel = await _service.GetMemberById(id);
+            var memberModel = await _service.GetMemberById(id, cancellationToken);
 
             return memberModel.Adapt<MemberViewModel>();
         }
 
         [HttpPost]
-        public async Task<MemberViewModel> CreateMember(MemberViewModel memberViewModel)
+        public async Task<MemberViewModel> CreateMember(MemberViewModel memberViewModel, CancellationToken cancellationToken)
         {
-            await _validator.ValidateAndThrowAsync(memberViewModel);
+            await _validator.ValidateAndThrowAsync(memberViewModel, cancellationToken);
 
             var memberModel = memberViewModel.Adapt<MemberModel>();
 
-            var memberViewModelResult = await _service.CreateMember(memberModel);
+            var memberViewModelResult = await _service.CreateMember(memberModel, cancellationToken);
 
             return memberViewModelResult.Adapt<MemberViewModel>();
         }
 
         [HttpPut]
-        public async Task<MemberViewModel> UpdateMember(MemberViewModel memberViewModel)
+        public async Task<MemberViewModel> UpdateMember(MemberViewModel memberViewModel, CancellationToken cancellationToken)
         {
-            await _validator.ValidateAndThrowAsync(memberViewModel);
+            await _validator.ValidateAndThrowAsync(memberViewModel, cancellationToken);
 
             var memberModel = memberViewModel.Adapt<MemberModel>();
 
-            var memberViewModelResult = await _service.UpdateMember(memberModel);
+            var memberViewModelResult = await _service.UpdateMember(memberModel, cancellationToken);
 
             return memberViewModelResult.Adapt<MemberViewModel>();
         }
 
         [HttpDelete("{id:int}")]
-        public async Task DeleteMember(int id)
+        public async Task DeleteMember(int id, CancellationToken cancellationToken)
         {
-            await _service.DeleteMember(id);
+            await _service.DeleteMember(id, cancellationToken);
         }
     }
 }

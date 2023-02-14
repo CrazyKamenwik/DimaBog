@@ -16,16 +16,16 @@ namespace SkyDrive.BLL.Services
             _eventRepository = repository;
         }
 
-        public async Task<IEnumerable<EventModel>> GetAllEvents()
+        public async Task<IEnumerable<EventModel>> GetAllEvents(CancellationToken cancellationToken)
         {
-            var eventEntities = await _eventRepository.GetAll();
+            var eventEntities = await _eventRepository.GetAll(cancellationToken);
 
             return eventEntities.Adapt<IEnumerable<EventModel>>();
         }
 
-        public async Task<EventModel> GetEventById(int id)
+        public async Task<EventModel> GetEventById(int id, CancellationToken cancellationToken)
         {
-            var entity = await _eventRepository.GetById(id);
+            var entity = await _eventRepository.GetById(id, cancellationToken);
 
             if (entity is null)
             {
@@ -35,31 +35,31 @@ namespace SkyDrive.BLL.Services
             return entity.Adapt<EventModel>();
         }
 
-        public async Task<EventModel> CreateEvent(EventModel eventModel)
+        public async Task<EventModel> CreateEvent(EventModel eventModel, CancellationToken cancellationToken)
         {
             var eventEntity = eventModel.Adapt<EventEntity>();
 
-            var eventEntityResult = await _eventRepository.Create(eventEntity);
+            var eventEntityResult = await _eventRepository.Create(eventEntity, cancellationToken);
 
             return eventEntityResult.Adapt<EventModel>();
         }
 
-        public async Task<EventModel> UpdateEvent(EventModel eventModel)
+        public async Task<EventModel> UpdateEvent(EventModel eventModel, CancellationToken cancellationToken)
         {
-            await GetEventById(eventModel.Id);
+            await GetEventById(eventModel.Id, cancellationToken);
 
             var eventEntity = eventModel.Adapt<EventEntity>();
 
-            var eventEntityResult = await _eventRepository.Update(eventEntity);
+            var eventEntityResult = await _eventRepository.Update(eventEntity, cancellationToken);
 
             return eventEntityResult.Adapt<EventModel>();
         }
 
-        public async Task DeleteEvent(int id)
+        public async Task DeleteEvent(int id, CancellationToken cancellationToken)
         {
-            var eventModel = await GetEventById(id);
+            var eventModel = await GetEventById(id, cancellationToken);
 
-            await _eventRepository.Delete(eventModel.Adapt<EventEntity>());
+            await _eventRepository.Delete(eventModel.Adapt<EventEntity>(), cancellationToken);
         }
     }
 }

@@ -23,49 +23,57 @@ namespace SkyDrive.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<EventViewModel>> GetAllEvents()
+        public async Task<IEnumerable<EventViewModel>> GetAllEvents(CancellationToken cancellationToken)
         {
-            var eventModels = await _service.GetAllEvents();
+            var eventModels = await _service.GetAllEvents(cancellationToken);
 
             return eventModels.Adapt<IEnumerable<EventViewModel>>();
         }
 
         [HttpGet("{id:int}")]
-        public async Task<EventViewModel> GetEventById(int id)
+        public async Task<EventViewModel> GetEventById(int id, CancellationToken cancellationToken)
         {
-            var eventModel = await _service.GetEventById(id);
+            var eventModel = await _service.GetEventById(id, cancellationToken);
 
             return eventModel.Adapt<EventViewModel>();
         }
 
         [HttpPost]
-        public async Task<EventViewModel> CreateEvent(EventViewModel eventViewModel)
+        public async Task<EventViewModel> CreateEvent(EventViewModel eventViewModel, CancellationToken cancellationToken)
         {
-            await _validator.ValidateAndThrowAsync(eventViewModel);
+            try
+            {
+                await _validator.ValidateAndThrowAsync(eventViewModel, cancellationToken);
 
-            var eventModel = eventViewModel.Adapt<EventModel>();
+                var eventModel = eventViewModel.Adapt<EventModel>();
 
-            var eventViewModelResult = await _service.CreateEvent(eventModel);
+                var eventViewModelResult = await _service.CreateEvent(eventModel, cancellationToken);
 
-            return eventViewModelResult.Adapt<EventViewModel>();
+                return eventViewModelResult.Adapt<EventViewModel>();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
         [HttpPut]
-        public async Task<EventViewModel> UpdateEvent(EventViewModel eventViewModel)
+        public async Task<EventViewModel> UpdateEvent(EventViewModel eventViewModel, CancellationToken cancellationToken)
         {
-            await _validator.ValidateAndThrowAsync(eventViewModel);
+            await _validator.ValidateAndThrowAsync(eventViewModel, cancellationToken);
 
             var eventModel = eventViewModel.Adapt<EventModel>();
 
-            var eventViewModelResult = await _service.UpdateEvent(eventModel);
+            var eventViewModelResult = await _service.UpdateEvent(eventModel, cancellationToken);
 
             return eventViewModelResult.Adapt<EventViewModel>();
         }
 
         [HttpDelete("{id:int}")]
-        public async Task Delete(int id)
+        public async Task Delete(int id, CancellationToken cancellationToken)
         {
-            await _service.DeleteEvent(id);
+            await _service.DeleteEvent(id, cancellationToken);
         }
     }
 }
