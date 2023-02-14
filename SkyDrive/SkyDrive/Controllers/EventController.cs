@@ -41,8 +41,6 @@ namespace SkyDrive.Controllers
         [HttpPost]
         public async Task<EventViewModel> CreateEvent(EventViewModel eventViewModel, CancellationToken cancellationToken)
         {
-            try
-            {
                 await _validator.ValidateAndThrowAsync(eventViewModel, cancellationToken);
 
                 var eventModel = eventViewModel.Adapt<EventModel>();
@@ -50,12 +48,6 @@ namespace SkyDrive.Controllers
                 var eventViewModelResult = await _service.CreateEvent(eventModel, cancellationToken);
 
                 return eventViewModelResult.Adapt<EventViewModel>();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
         }
 
         [HttpPut]
