@@ -1,6 +1,9 @@
 using SkyDrive.BLL.IoC;
+using SkyDrive.Configuration;
 using SkyDrive.IoC;
 using SkyDrive.Middleware;
+
+Configuration.SetMapster();
 
 var builder = WebApplication.CreateBuilder(args);
 

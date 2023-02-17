@@ -24,8 +24,4 @@
     <ProjectReference Include="..\SkyDrive.BLL\SkyDrive.BLL.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
-
 </Project>
