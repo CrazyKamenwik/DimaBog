@@ -3,9 +3,9 @@ using AutoFixture.Xunit2;
 
 namespace SkyDrive.Tests.FixtureCustomization
 {
-    public class MyFixtureAttribute : AutoDataAttribute
+    public class FixtureWithoutCirculationAttribute : AutoDataAttribute
     {
-        public MyFixtureAttribute()
+        public FixtureWithoutCirculationAttribute()
             : base(() =>
             {
                 var fixture = new Fixture();

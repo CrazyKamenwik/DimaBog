@@ -21,7 +21,7 @@ namespace SkyDrive.Tests.UnitTests
         }
 
         [Theory]
-        [MyFixture]
+        [FixtureWithoutCirculation]
         public async Task GetAllEvents_ReturnListOfEvents(
             List<EventModel> listOfEventModels,
             List<EventEntity> listOfEventEntities)
@@ -54,7 +54,7 @@ namespace SkyDrive.Tests.UnitTests
         }
 
         [Theory]
-        [MyFixture]
+        [FixtureWithoutCirculation]
         public async Task GetEventById_CorrectId_ReturnEventModel(EventEntity eventEntity)
         {
             //Arrange
@@ -70,7 +70,7 @@ namespace SkyDrive.Tests.UnitTests
         }
 
         [Theory]
-        [MyFixture]
+        [FixtureWithoutCirculation]
         public async Task GetEventById_IncorrectId_ReturnNull(int eventId)
         {
             //Arrange
@@ -88,7 +88,7 @@ namespace SkyDrive.Tests.UnitTests
         }
 
         [Theory]
-        [MyFixture]
+        [FixtureWithoutCirculation]
         public async Task CreateEvent_CorrectModel_ReturnEventModel(
             EventEntity eventEntity,
             EventModel eventModel)
@@ -106,7 +106,7 @@ namespace SkyDrive.Tests.UnitTests
         }
 
         [Theory]
-        [MyFixture]
+        [FixtureWithoutCirculation]
         public async Task UpdateEvent_CorrectModel_ReturnEventModel(
             EventEntity eventEntity,
             EventModel eventModel)
@@ -128,7 +128,7 @@ namespace SkyDrive.Tests.UnitTests
         }
 
         [Theory]
-        [MyFixture]
+        [FixtureWithoutCirculation]
         public async Task UpdateEvent_IncorrectModel_ReturnEntityNotFoundException(EventModel eventModel)
         {
             //Arrange
@@ -146,7 +146,7 @@ namespace SkyDrive.Tests.UnitTests
         }
 
         [Theory]
-        [MyFixture]
+        [FixtureWithoutCirculation]
         public async Task DeleteEvent_CorrectId_ReturnNull(EventEntity eventEntity)
         {
             //Arrange
@@ -162,7 +162,7 @@ namespace SkyDrive.Tests.UnitTests
         }
 
         [Theory]
-        [MyFixture]
+        [FixtureWithoutCirculation]
         public async Task DeleteEvent_IncorrectId_ReturnArgumentNullException(int eventId)
         {
             //Arrange

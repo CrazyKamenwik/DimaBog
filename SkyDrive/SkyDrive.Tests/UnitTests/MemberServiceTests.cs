@@ -21,7 +21,7 @@ namespace SkyDrive.Tests.UnitTests
         }
 
         [Theory]
-        [MyFixture]
+        [FixtureWithoutCirculation]
         public async Task GetAllMembers_ReturnListOfMembers(
             List<MemberModel> listOfMemberModels,
             List<MemberEntity> listOfMemberEntities)
@@ -54,7 +54,7 @@ namespace SkyDrive.Tests.UnitTests
         }
 
         [Theory]
-        [MyFixture]
+        [FixtureWithoutCirculation]
         public async Task GetMemberById_CorrectId_ReturnMemberModel(MemberEntity memberEntity)
         {
             //Arrange
@@ -70,7 +70,7 @@ namespace SkyDrive.Tests.UnitTests
         }
 
         [Theory]
-        [MyFixture]
+        [FixtureWithoutCirculation]
         public async Task GetMemberById_IncorrectId_ReturnNull(int memberId)
         {
             //Arrange
@@ -88,7 +88,7 @@ namespace SkyDrive.Tests.UnitTests
         }
 
         [Theory]
-        [MyFixture]
+        [FixtureWithoutCirculation]
         public async Task CreateMember_CorrectModel_ReturnEventModel(
             MemberModel memberModel,
             MemberEntity memberEntity)
@@ -106,7 +106,7 @@ namespace SkyDrive.Tests.UnitTests
         }
 
         [Theory]
-        [MyFixture]
+        [FixtureWithoutCirculation]
         public async Task UpdateMember_CorrectModel_ReturnMemberModel(
             MemberEntity memberEntity,
             MemberModel memberModel)
@@ -128,7 +128,7 @@ namespace SkyDrive.Tests.UnitTests
         }
 
         [Theory]
-        [MyFixture]
+        [FixtureWithoutCirculation]
         public async Task UpdateMember_IncorrectModel_ReturnEntityNotFoundException(MemberModel memberModel)
         {
             //Arrange
@@ -146,7 +146,7 @@ namespace SkyDrive.Tests.UnitTests
         }
 
         [Theory]
-        [MyFixture]
+        [FixtureWithoutCirculation]
         public async Task DeleteMember_CorrectId_ReturnNull(MemberEntity memberEntity)
         {
             //Arrange
@@ -162,7 +162,7 @@ namespace SkyDrive.Tests.UnitTests
         }
 
         [Theory]
-        [MyFixture]
+        [FixtureWithoutCirculation]
         public async Task DeleteMember_IncorrectId_ReturnArgumentNullException(int memberId)
         {
             //Arrange

@@ -21,7 +21,7 @@ namespace SkyDrive.Tests.UnitTests
         }
 
         [Theory]
-        [MyFixture]
+        [FixtureWithoutCirculation]
         public async Task GetAllInstructors_ReturnListOfInstructors(
             List<InstructorModel> listOfInstructorModels,
             List<InstructorEntity> listOfInstructorEntities)
@@ -54,7 +54,7 @@ namespace SkyDrive.Tests.UnitTests
         }
 
         [Theory]
-        [MyFixture]
+        [FixtureWithoutCirculation]
         public async Task GetInstructorById_CorrectId_ReturnInstructorModel(InstructorEntity instructorEntity)
         {
             //Arrange
@@ -70,7 +70,7 @@ namespace SkyDrive.Tests.UnitTests
         }
 
         [Theory]
-        [MyFixture]
+        [FixtureWithoutCirculation]
         public async Task GetInstructorById_IncorrectId_ReturnNull(int instructorId)
         {
             //Arrange
@@ -88,7 +88,7 @@ namespace SkyDrive.Tests.UnitTests
         }
 
         [Theory]
-        [MyFixture]
+        [FixtureWithoutCirculation]
         public async Task CreateInstructor_CorrectModel_ReturnEventModel(
             InstructorEntity instructorEntity,
             InstructorModel instructorModel)
@@ -106,7 +106,7 @@ namespace SkyDrive.Tests.UnitTests
         }
 
         [Theory]
-        [MyFixture]
+        [FixtureWithoutCirculation]
         public async Task UpdateInstructor_CorrectModel_ReturnInstructorModel(
             InstructorEntity instructorEntity,
             InstructorModel instructorModel)
@@ -128,7 +128,7 @@ namespace SkyDrive.Tests.UnitTests
         }
 
         [Theory]
-        [MyFixture]
+        [FixtureWithoutCirculation]
         public async Task UpdateInstructor_IncorrectModel_ReturnEntityNotFoundException(InstructorModel instructorModel)
         {
             //Arrange
@@ -146,7 +146,7 @@ namespace SkyDrive.Tests.UnitTests
         }
 
         [Theory]
-        [MyFixture]
+        [FixtureWithoutCirculation]
         public async Task DeleteInstructor_CorrectId_ReturnNull(InstructorEntity instructorEntity)
         {
             //Arrange
@@ -162,7 +162,7 @@ namespace SkyDrive.Tests.UnitTests
         }
 
         [Theory]
-        [MyFixture]
+        [FixtureWithoutCirculation]
         public async Task DeleteInstructor_IncorrectId_ReturnArgumentNullException(int instructorId)
         {
             //Arrange
