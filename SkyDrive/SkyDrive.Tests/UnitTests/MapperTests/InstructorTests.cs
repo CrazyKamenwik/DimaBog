@@ -9,7 +9,6 @@ namespace SkyDrive.Tests.UnitTests.MapperTests
 {
     public class InstructorTests
     {
-
         [Theory]
         [FixtureWithoutCirculation]
         public Task AdaptFromModelToEntity_ReturnEntity(InstructorModel instructorModel)

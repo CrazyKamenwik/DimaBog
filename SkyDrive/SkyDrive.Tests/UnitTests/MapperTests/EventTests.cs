@@ -9,7 +9,6 @@ namespace SkyDrive.Tests.UnitTests.MapperTests
 {
     public class EventTests
     {
-
         [Theory]
         [FixtureWithoutCirculation]
         public Task AdaptFromModelToEntity_ReturnEntity(EventModel eventModel)
