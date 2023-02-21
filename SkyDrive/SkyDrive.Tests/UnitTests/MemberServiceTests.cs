@@ -1,4 +1,6 @@
-﻿using Moq;
+﻿using AutoFixture;
+using FluentAssertions;
+using Moq;
 using SkyDrive.BLL.Exceptions;
 using SkyDrive.BLL.Models;
 using SkyDrive.BLL.Services;
@@ -10,54 +12,23 @@ namespace SkyDrive.Tests.UnitTests
     public class MemberServiceTests
     {
         private readonly Mock<IMemberRepository> _mockRepository;
+        private readonly Fixture _fixture;
 
         public MemberServiceTests()
         {
             _mockRepository = new Mock<IMemberRepository>();
+
+            _fixture = new Fixture();
+            _fixture.Behaviors.Remove(new ThrowingRecursionBehavior());
+            _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
         }
 
         [Fact]
         public async Task GetAllMembers_ReturnListOfMembers()
         {
             //Arrange
-            var listOfMemberModels = new List<MemberModel>()
-            {
-                new()
-                {
-                    Id = 1,
-                    FirstName= "FirstName",
-                    LastName= "LastName",
-                    MiddleName= "MiddleName",
-                    Events = null
-                },
-                new()
-                {
-                    Id = 2,
-                    FirstName= "FirstName 2",
-                    LastName= "LastName 2",
-                    MiddleName= "MiddleName 2",
-                    Events = null
-                }
-            };
-            var listOfMemberEntities = new List<MemberEntity>
-            {
-                new()
-                {
-                    Id = 1,
-                    FirstName= "FirstName",
-                    LastName= "LastName",
-                    MiddleName= "MiddleName",
-                    Events = null
-                },
-                new()
-                {
-                    Id = 2,
-                    FirstName= "FirstName 2",
-                    LastName= "LastName 2",
-                    MiddleName= "MiddleName 2",
-                    Events = null
-                }
-            };
+            var listOfMemberModels = _fixture.Create<List<MemberModel>>();
+            var listOfMemberEntities = _fixture.Create<List<MemberEntity>>();
 
             _mockRepository.Setup(x => x.GetAll(CancellationToken.None)).ReturnsAsync(listOfMemberEntities);
             var service = new MemberService(_mockRepository.Object);
@@ -67,9 +38,8 @@ namespace SkyDrive.Tests.UnitTests
 
             //Assert
             _mockRepository.Verify(x => x.GetAll(CancellationToken.None), Times.Once);
-            Assert.NotNull(result);
-            Assert.NotEmpty(result);
-            Assert.Equal(result.Count(), listOfMemberModels.Count);
+
+            result.Should().NotBeNullOrEmpty().And.HaveSameCount(listOfMemberModels);
         }
 
         [Fact]
@@ -77,6 +47,7 @@ namespace SkyDrive.Tests.UnitTests
         {
             //Arrange
             _mockRepository.Setup(x => x.GetAll(CancellationToken.None)).ReturnsAsync(new List<MemberEntity>());
+
             var service = new MemberService(_mockRepository.Object);
 
             //Act
@@ -84,71 +55,56 @@ namespace SkyDrive.Tests.UnitTests
 
             //Assert
             _mockRepository.Verify(x => x.GetAll(CancellationToken.None), Times.Once);
-            Assert.NotNull(result);
-            Assert.Empty(result);
+
+            result.Should().NotBeNull().And.BeEmpty();
         }
 
         [Fact]
         public async Task GetMemberById_CorrectId_ReturnMemberModel()
         {
             //Arrange
-            var memberEntity = new MemberEntity
-            {
-                Id = 2,
-                FirstName = "FirstName 2",
-                LastName = "LastName 2",
-                MiddleName = "MiddleName 2",
-                Events = null
-            };
+            var memberEntity = _fixture.Create<MemberEntity>();
 
-            _mockRepository.Setup(x => x.GetById(2, CancellationToken.None)).ReturnsAsync(memberEntity);
+            _mockRepository.Setup(x => x.GetById(memberEntity.Id, CancellationToken.None)).ReturnsAsync(memberEntity);
+
             var service = new MemberService(_mockRepository.Object);
 
             //Act
-            var result = await service.GetMemberById(2, CancellationToken.None);
+            var result = await service.GetMemberById(memberEntity.Id, CancellationToken.None);
 
             //Assert
-            _mockRepository.Verify(x => x.GetById(2, CancellationToken.None), Times.Once);
-            Assert.NotNull(result);
-            Assert.IsType<MemberModel>(result);
+            _mockRepository.Verify(x => x.GetById(memberEntity.Id, CancellationToken.None), Times.Once);
+
+            result.Should().NotBeNull().And.BeOfType<MemberModel>();
         }
 
         [Fact]
         public async Task GetMemberById_IncorrectId_ReturnNull()
         {
             //Arrange
-            _mockRepository.Setup(x => x.GetById(2, CancellationToken.None)).ReturnsAsync(value: null);
+            var inputId = _fixture.Create<int>();
+
+            _mockRepository.Setup(x => x.GetById(inputId, CancellationToken.None)).ReturnsAsync(value: null);
+
             var service = new MemberService(_mockRepository.Object);
 
             //Act
-            var result = await Assert.ThrowsAsync<EntityNotFoundException>(() => service.GetMemberById(2, CancellationToken.None));
+            var result = await Assert.ThrowsAsync<EntityNotFoundException>(() => service.GetMemberById(inputId, CancellationToken.None));
 
             //Assert
-            _mockRepository.Verify(x => x.GetById(2, CancellationToken.None), Times.Once);
-            Assert.NotNull(result);
-            Assert.Equal("Member with id: 2 not found", result.Message);
+            _mockRepository.Verify(x => x.GetById(inputId, CancellationToken.None), Times.Once);
+
+            result.Should().NotBeNull();
+
+            Assert.Equal($"Member with id: {inputId} not found", result.Message);
         }
 
         [Fact]
         public async Task CreateMember_CorrectModel_ReturnEventModel()
         {
             //Arrange
-            var memberModel = new MemberModel
-            {
-                Id = 0,
-                FirstName = "FirstName 2",
-                LastName = "LastName 2",
-                MiddleName = "MiddleName 2",
-                Events = null
-            };
-            var memberEntity = new MemberEntity
-            {
-                Id = 0,
-                FirstName = "FirstName 2",
-                LastName = "LastName 2",
-                MiddleName = "MiddleName 2",
-                Events = null
-            };
+            var memberModel = _fixture.Create<MemberModel>();
+            var memberEntity = _fixture.Create<MemberEntity>();
 
             _mockRepository.Setup(x => x.Create(It.IsAny<MemberEntity>(), CancellationToken.None)).ReturnsAsync(value: memberEntity);
             var service = new MemberService(_mockRepository.Object);
@@ -158,92 +114,70 @@ namespace SkyDrive.Tests.UnitTests
 
             //Assert
             _mockRepository.Verify(x => x.Create(It.IsAny<MemberEntity>(), CancellationToken.None), Times.Once);
-            Assert.NotNull(result);
-            Assert.IsType<MemberModel>(result);
+
+            result.Should().NotBeNull().And.BeOfType<MemberModel>();
         }
 
         [Fact]
         public async Task UpdateMember_CorrectModel_ReturnMemberModel()
         {
             //Arrange
-            var memberModel = new MemberModel
-            {
-                Id = 3,
-                FirstName = "FirstName 2",
-                LastName = "LastName 2",
-                MiddleName = "MiddleName 2",
-                Events = null
-            };
-            var memberEntity = new MemberEntity
-            {
-                Id = 3,
-                FirstName = "FirstName 2",
-                LastName = "LastName 2",
-                MiddleName = "MiddleName 2",
-                Events = null
-            };
+            var memberModel = _fixture.Create<MemberModel>();
+            var memberEntity = _fixture.Create<MemberEntity>();
 
-            _mockRepository.Setup(x => x.GetById(3, CancellationToken.None)).ReturnsAsync(memberEntity);
+            memberEntity.Id = memberModel.Id;
+
+            _mockRepository.Setup(x => x.GetById(memberModel.Id, CancellationToken.None)).ReturnsAsync(memberEntity);
             _mockRepository.Setup(x => x.Update(It.IsAny<MemberEntity>(), CancellationToken.None)).ReturnsAsync(memberEntity);
+
             var service = new MemberService(_mockRepository.Object);
 
             //Act
             var result = await service.UpdateMember(memberModel, CancellationToken.None);
 
             //Assert
-            _mockRepository.Verify(x => x.GetById(3, CancellationToken.None), Times.Once);
+            _mockRepository.Verify(x => x.GetById(memberModel.Id, CancellationToken.None), Times.Once);
             _mockRepository.Verify(x => x.Update(It.IsAny<MemberEntity>(), CancellationToken.None), Times.Once);
-            Assert.NotNull(result);
-            Assert.IsType<MemberModel>(result);
+
+            result.Should().NotBeNull().And.BeOfType<MemberModel>();
         }
 
         [Fact]
         public async Task UpdateMember_IncorrectModel_ReturnEntityNotFoundException()
         {
             //Arrange
-            var memberModel = new MemberModel
-            {
-                Id = 3,
-                FirstName = "FirstName 2",
-                LastName = "LastName 2",
-                MiddleName = "MiddleName 2",
-                Events = null
-            };
+            var memberModel = _fixture.Create<MemberModel>();
 
-            _mockRepository.Setup(x => x.GetById(3, CancellationToken.None)).ReturnsAsync(value: null);
+            _mockRepository.Setup(x => x.GetById(memberModel.Id, CancellationToken.None)).ReturnsAsync(value: null);
             var service = new MemberService(_mockRepository.Object);
 
             //Act
             var result = await Assert.ThrowsAsync<EntityNotFoundException>(() => service.UpdateMember(memberModel, CancellationToken.None));
 
             //Assert
-            _mockRepository.Verify(x => x.GetById(3, CancellationToken.None), Times.Once);
-            Assert.NotNull(result);
-            Assert.Equal("Member with id: 3 not found", result.Message);
+            _mockRepository.Verify(x => x.GetById(memberModel.Id, CancellationToken.None), Times.Once);
+
+            result.Should().NotBeNull();
+
+            Assert.Equal($"Member with id: {memberModel.Id} not found", result.Message);
         }
 
         [Fact]
         public async Task DeleteMember_CorrectId_ReturnNull()
         {
             //Arrange
-            var memberEntity = new MemberEntity
-            {
-                Id = 3,
-                FirstName = "FirstName 2",
-                LastName = "LastName 2",
-                MiddleName = "MiddleName 2",
-                Events = null
-            };
+            var memberEntity = _fixture.Create<MemberEntity>();
 
-            _mockRepository.Setup(x => x.GetById(3, CancellationToken.None)).ReturnsAsync(memberEntity);
+            _mockRepository.Setup(x => x.GetById(memberEntity.Id, CancellationToken.None)).ReturnsAsync(memberEntity);
             _mockRepository.Setup(x => x.Delete(It.IsAny<MemberEntity>(), CancellationToken.None));
+
             var service = new MemberService(_mockRepository.Object);
 
             //Act
-            await service.DeleteMember(3, CancellationToken.None);
+            await service.DeleteMember(memberEntity.Id, CancellationToken.None);
 
             //Assert
-            _mockRepository.Verify(x => x.GetById(3, CancellationToken.None), Times.Once);
+            _mockRepository.Verify(x => x.GetById(memberEntity.Id, CancellationToken.None), Times.Once);
             _mockRepository.Verify(x => x.Delete(It.IsAny<MemberEntity>(), CancellationToken.None), Times.Once);
         }
 
@@ -251,16 +185,21 @@ namespace SkyDrive.Tests.UnitTests
         public async Task DeleteMember_IncorrectId_ReturnArgumentNullException()
         {
             //Arrange
-            _mockRepository.Setup(x => x.GetById(3, CancellationToken.None)).ReturnsAsync(value: null);
+            var inputId = _fixture.Create<int>();
+
+            _mockRepository.Setup(x => x.GetById(inputId, CancellationToken.None)).ReturnsAsync(value: null);
+
             var service = new MemberService(_mockRepository.Object);
 
             //Act
-            var result = await Assert.ThrowsAsync<EntityNotFoundException>(() => service.DeleteMember(3, CancellationToken.None));
+            var result = await Assert.ThrowsAsync<EntityNotFoundException>(() => service.DeleteMember(inputId, CancellationToken.None));
 
             //Assert
-            _mockRepository.Verify(x => x.GetById(3, CancellationToken.None), Times.Once);
-            Assert.NotNull(result);
-            Assert.Equal("Member with id: 3 not found", result.Message);
+            _mockRepository.Verify(x => x.GetById(inputId, CancellationToken.None), Times.Once);
+
+            result.Should().NotBeNull();
+
+            Assert.Equal($"Member with id: {inputId} not found", result.Message);
         }
     }
 }
