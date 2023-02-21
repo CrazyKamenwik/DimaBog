@@ -7,7 +7,7 @@ using SkyDrive.DAL.Entities;
 using SkyDrive.DAL.Interfaces;
 using SkyDrive.Tests.FixtureCustomization;
 
-namespace SkyDrive.Tests.UnitTests
+namespace SkyDrive.Tests.UnitTests.ServiceTests
 {
     public class MemberServiceTests
     {

@@ -15,8 +15,6 @@ namespace SkyDrive.Tests.FixtureCustomization
 
                 return fixture;
             })
-        {
-
-        }
+        { }
     }
 }
