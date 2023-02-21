@@ -1,41 +1,36 @@
-﻿using AutoFixture;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Moq;
 using SkyDrive.BLL.Exceptions;
 using SkyDrive.BLL.Models;
 using SkyDrive.BLL.Services;
 using SkyDrive.DAL.Entities;
 using SkyDrive.DAL.Interfaces;
+using SkyDrive.Tests.FixtureCustomization;
 
 namespace SkyDrive.Tests.UnitTests
 {
     public class InstructorServiceTests
     {
         private readonly Mock<IInstructorRepository> _mockRepository;
-        private readonly Fixture _fixture;
+        private readonly InstructorService _service;
 
         public InstructorServiceTests()
         {
             _mockRepository = new Mock<IInstructorRepository>();
-
-            _fixture = new Fixture();
-            _fixture.Behaviors.Remove(new ThrowingRecursionBehavior());
-            _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+            _service = new InstructorService(_mockRepository.Object);
         }
 
-        [Fact]
-        public async Task GetAllInstructors_ReturnListOfInstructors()
+        [Theory]
+        [MyFixture]
+        public async Task GetAllInstructors_ReturnListOfInstructors(
+            List<InstructorModel> listOfInstructorModels,
+            List<InstructorEntity> listOfInstructorEntities)
         {
             //Arrange
-            var listOfInstructorModels = _fixture.Create<List<InstructorModel>>();
-            var listOfInstructorEntities = _fixture.Create<List<InstructorEntity>>();
-
             _mockRepository.Setup(x => x.GetAll(CancellationToken.None)).ReturnsAsync(listOfInstructorEntities);
 
-            var service = new InstructorService(_mockRepository.Object);
-
             //Act
-            var result = await service.GetAllInstructors(CancellationToken.None);
+            var result = await _service.GetAllInstructors(CancellationToken.None);
 
             //Assert
             _mockRepository.Verify(x => x.GetAll(CancellationToken.None), Times.Once);
@@ -49,10 +44,8 @@ namespace SkyDrive.Tests.UnitTests
             //Arrange
             _mockRepository.Setup(x => x.GetAll(CancellationToken.None)).ReturnsAsync(new List<InstructorEntity>());
 
-            var service = new InstructorService(_mockRepository.Object);
-
             //Act
-            var result = await service.GetAllInstructors(CancellationToken.None);
+            var result = await _service.GetAllInstructors(CancellationToken.None);
 
             //Assert
             _mockRepository.Verify(x => x.GetAll(CancellationToken.None), Times.Once);
@@ -60,18 +53,15 @@ namespace SkyDrive.Tests.UnitTests
             result.Should().NotBeNull().And.BeEmpty();
         }
 
-        [Fact]
-        public async Task GetInstructorById_CorrectId_ReturnInstructorModel()
+        [Theory]
+        [MyFixture]
+        public async Task GetInstructorById_CorrectId_ReturnInstructorModel(InstructorEntity instructorEntity)
         {
             //Arrange
-            var instructorEntity = _fixture.Create<InstructorEntity>();
-
             _mockRepository.Setup(x => x.GetById(2, CancellationToken.None)).ReturnsAsync(instructorEntity);
 
-            var service = new InstructorService(_mockRepository.Object);
-
             //Act
-            var result = await service.GetInstructorById(2, CancellationToken.None);
+            var result = await _service.GetInstructorById(2, CancellationToken.None);
 
             //Assert
             _mockRepository.Verify(x => x.GetById(2, CancellationToken.None), Times.Once);
@@ -79,40 +69,35 @@ namespace SkyDrive.Tests.UnitTests
             result.Should().NotBeNull().And.BeOfType<InstructorModel>();
         }
 
-        [Fact]
-        public async Task GetInstructorById_IncorrectId_ReturnNull()
+        [Theory]
+        [MyFixture]
+        public async Task GetInstructorById_IncorrectId_ReturnNull(int instructorId)
         {
             //Arrange
-            var inputId = _fixture.Create<int>();
-
-            _mockRepository.Setup(x => x.GetById(inputId, CancellationToken.None)).ReturnsAsync(value: null);
-
-            var service = new InstructorService(_mockRepository.Object);
+            _mockRepository.Setup(x => x.GetById(instructorId, CancellationToken.None)).ReturnsAsync(value: null);
 
             //Act
-            var result = await Assert.ThrowsAsync<EntityNotFoundException>(() => service.GetInstructorById(inputId, CancellationToken.None));
+            var result = await Assert.ThrowsAsync<EntityNotFoundException>(() => _service.GetInstructorById(instructorId, CancellationToken.None));
 
             //Assert
-            _mockRepository.Verify(x => x.GetById(inputId, CancellationToken.None), Times.Once);
+            _mockRepository.Verify(x => x.GetById(instructorId, CancellationToken.None), Times.Once);
 
             result.Should().NotBeNull();
 
-            Assert.Equal($"Instructor with id: {inputId} not found", result.Message);
+            Assert.Equal($"Instructor with id: {instructorId} not found", result.Message);
         }
 
-        [Fact]
-        public async Task CreateInstructor_CorrectModel_ReturnEventModel()
+        [Theory]
+        [MyFixture]
+        public async Task CreateInstructor_CorrectModel_ReturnEventModel(
+            InstructorEntity instructorEntity,
+            InstructorModel instructorModel)
         {
             //Arrange
-            var instructorModel = _fixture.Create<InstructorModel>();
-            var instructorEntity = _fixture.Create<InstructorEntity>();
-
             _mockRepository.Setup(x => x.Create(It.IsAny<InstructorEntity>(), CancellationToken.None)).ReturnsAsync(value: instructorEntity);
 
-            var service = new InstructorService(_mockRepository.Object);
-
             //Act
-            var result = await service.CreateInstructor(instructorModel, CancellationToken.None);
+            var result = await _service.CreateInstructor(instructorModel, CancellationToken.None);
 
             //Assert
             _mockRepository.Verify(x => x.Create(It.IsAny<InstructorEntity>(), CancellationToken.None), Times.Once);
@@ -120,22 +105,20 @@ namespace SkyDrive.Tests.UnitTests
             result.Should().NotBeNull().And.BeOfType<InstructorModel>();
         }
 
-        [Fact]
-        public async Task UpdateInstructor_CorrectModel_ReturnInstructorModel()
+        [Theory]
+        [MyFixture]
+        public async Task UpdateInstructor_CorrectModel_ReturnInstructorModel(
+            InstructorEntity instructorEntity,
+            InstructorModel instructorModel)
         {
             //Arrange
-            var instructorModel = _fixture.Create<InstructorModel>();
-            var instructorEntity = _fixture.Create<InstructorEntity>();
-
             instructorEntity.Id = instructorModel.Id;
 
             _mockRepository.Setup(x => x.GetById(instructorModel.Id, CancellationToken.None)).ReturnsAsync(instructorEntity);
             _mockRepository.Setup(x => x.Update(It.IsAny<InstructorEntity>(), CancellationToken.None)).ReturnsAsync(instructorEntity);
 
-            var service = new InstructorService(_mockRepository.Object);
-
             //Act
-            var result = await service.UpdateInstructor(instructorModel, CancellationToken.None);
+            var result = await _service.UpdateInstructor(instructorModel, CancellationToken.None);
 
             //Assert
             _mockRepository.Verify(x => x.GetById(instructorModel.Id, CancellationToken.None), Times.Once);
@@ -144,18 +127,15 @@ namespace SkyDrive.Tests.UnitTests
             result.Should().NotBeNull().And.BeOfType<InstructorModel>();
         }
 
-        [Fact]
-        public async Task UpdateInstructor_IncorrectModel_ReturnEntityNotFoundException()
+        [Theory]
+        [MyFixture]
+        public async Task UpdateInstructor_IncorrectModel_ReturnEntityNotFoundException(InstructorModel instructorModel)
         {
             //Arrange
-            var instructorModel = _fixture.Create<InstructorModel>();
-
             _mockRepository.Setup(x => x.GetById(instructorModel.Id, CancellationToken.None)).ReturnsAsync(value: null);
 
-            var service = new InstructorService(_mockRepository.Object);
-
             //Act
-            var result = await Assert.ThrowsAsync<EntityNotFoundException>(() => service.UpdateInstructor(instructorModel, CancellationToken.None));
+            var result = await Assert.ThrowsAsync<EntityNotFoundException>(() => _service.UpdateInstructor(instructorModel, CancellationToken.None));
 
             //Assert
             _mockRepository.Verify(x => x.GetById(instructorModel.Id, CancellationToken.None), Times.Once);
@@ -165,44 +145,38 @@ namespace SkyDrive.Tests.UnitTests
             Assert.Equal($"Instructor with id: {instructorModel.Id} not found", result.Message);
         }
 
-        [Fact]
-        public async Task DeleteInstructor_CorrectId_ReturnNull()
+        [Theory]
+        [MyFixture]
+        public async Task DeleteInstructor_CorrectId_ReturnNull(InstructorEntity instructorEntity)
         {
             //Arrange
-            var instructorEntity = _fixture.Create<InstructorEntity>();
-
             _mockRepository.Setup(x => x.GetById(instructorEntity.Id, CancellationToken.None)).ReturnsAsync(instructorEntity);
             _mockRepository.Setup(x => x.Delete(It.IsAny<InstructorEntity>(), CancellationToken.None));
 
-            var service = new InstructorService(_mockRepository.Object);
-
             //Act
-            await service.DeleteInstructor(instructorEntity.Id, CancellationToken.None);
+            await _service.DeleteInstructor(instructorEntity.Id, CancellationToken.None);
 
             //Assert
             _mockRepository.Verify(x => x.GetById(instructorEntity.Id, CancellationToken.None), Times.Once);
             _mockRepository.Verify(x => x.Delete(It.IsAny<InstructorEntity>(), CancellationToken.None), Times.Once);
         }
 
-        [Fact]
-        public async Task DeleteInstructor_IncorrectId_ReturnArgumentNullException()
+        [Theory]
+        [MyFixture]
+        public async Task DeleteInstructor_IncorrectId_ReturnArgumentNullException(int instructorId)
         {
             //Arrange
-            var inputId = _fixture.Create<int>();
-
-            _mockRepository.Setup(x => x.GetById(inputId, CancellationToken.None)).ReturnsAsync(value: null);
-
-            var service = new InstructorService(_mockRepository.Object);
+            _mockRepository.Setup(x => x.GetById(instructorId, CancellationToken.None)).ReturnsAsync(value: null);
 
             //Act
-            var result = await Assert.ThrowsAsync<EntityNotFoundException>(() => service.DeleteInstructor(inputId, CancellationToken.None));
+            var result = await Assert.ThrowsAsync<EntityNotFoundException>(() => _service.DeleteInstructor(instructorId, CancellationToken.None));
 
             //Assert
-            _mockRepository.Verify(x => x.GetById(inputId, CancellationToken.None), Times.Once);
+            _mockRepository.Verify(x => x.GetById(instructorId, CancellationToken.None), Times.Once);
 
             result.Should().NotBeNull();
 
-            Assert.Equal($"Instructor with id: {inputId} not found", result.Message);
+            Assert.Equal($"Instructor with id: {instructorId} not found", result.Message);
         }
     }
 }
