@@ -14,7 +14,7 @@ namespace SkyDrive.Tests.UnitTests.MapperTests
         public Task AdaptFromModelToEntity_ReturnEntity(InstructorModel instructorModel)
         {
             //Act
-            var instructorEntity = instructorModel.Adapt<InstructorModel>();
+            var instructorEntity = instructorModel.Adapt<InstructorEntity>();
 
             //Assert
             instructorEntity.Should().BeEquivalentTo(instructorModel);

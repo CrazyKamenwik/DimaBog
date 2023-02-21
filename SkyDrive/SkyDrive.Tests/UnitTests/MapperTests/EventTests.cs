@@ -14,7 +14,7 @@ namespace SkyDrive.Tests.UnitTests.MapperTests
         public Task AdaptFromModelToEntity_ReturnEntity(EventModel eventModel)
         {
             //Act
-            var eventEntity = eventModel.Adapt<EventModel>();
+            var eventEntity = eventModel.Adapt<EventEntity>();
 
             //Assert
             eventEntity.Should().BeEquivalentTo(eventModel);
