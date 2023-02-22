@@ -5,7 +5,7 @@ using SkyDrive.BLL.Models;
 using SkyDrive.BLL.Services;
 using SkyDrive.DAL.Entities;
 using SkyDrive.DAL.Interfaces;
-using SkyDrive.Tests.FixtureCustomization;
+using SkyDrive.Tests.FixtureCustomization.Attributes;
 
 namespace SkyDrive.Tests.UnitTests
 {

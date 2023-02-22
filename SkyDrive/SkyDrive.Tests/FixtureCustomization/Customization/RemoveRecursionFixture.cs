@@ -1,6 +1,6 @@
 ﻿using AutoFixture;
 
-namespace SkyDrive.Tests.FixtureCustomization
+namespace SkyDrive.Tests.FixtureCustomization.Customization
 {
     public class RemoveRecursionFixture : ICustomization
     {

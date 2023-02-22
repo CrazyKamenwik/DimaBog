@@ -1,7 +1,8 @@
 ﻿using AutoFixture;
 using AutoFixture.Xunit2;
+using SkyDrive.Tests.FixtureCustomization.Customization;
 
-namespace SkyDrive.Tests.FixtureCustomization
+namespace SkyDrive.Tests.FixtureCustomization.Attributes
 {
     public class FixtureWithoutCirculationAttribute : AutoDataAttribute
     {

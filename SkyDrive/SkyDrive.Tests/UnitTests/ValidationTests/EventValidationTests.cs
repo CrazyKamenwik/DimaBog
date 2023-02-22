@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using FluentValidation;
-using SkyDrive.Tests.FixtureCustomization;
+using SkyDrive.Tests.FixtureCustomization.Attributes;
 using SkyDrive.Validators;
 using SkyDrive.ViewModels;
 
