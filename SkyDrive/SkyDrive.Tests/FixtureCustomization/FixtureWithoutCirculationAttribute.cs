@@ -6,17 +6,13 @@ namespace SkyDrive.Tests.FixtureCustomization
     public class FixtureWithoutCirculationAttribute : AutoDataAttribute
     {
         public FixtureWithoutCirculationAttribute()
-            : base(() =>
-            {
-                var fixture = new Fixture();
+        : this(new Fixture())
+        { }
 
-                fixture.Behaviors.Remove(new ThrowingRecursionBehavior());
-                fixture.Behaviors.Add(new OmitOnRecursionBehavior());
-
-                return fixture;
-            })
+        public FixtureWithoutCirculationAttribute(IFixture fixture)
+            : base(fixture)
         {
-
+            fixture.Customize(new RemoveRecursionFixture());
         }
     }
 }
