@@ -11,54 +11,46 @@ namespace SkyDrive.Tests.UnitTests.MapperTests
     {
         [Theory]
         [FixtureWithoutCirculation]
-        public Task AdaptFromModelToEntity_ReturnEntity(InstructorModel instructorModel)
+        public void AdaptFromModelToEntity_ReturnEntity(InstructorModel instructorModel)
         {
             //Act
             var instructorEntity = instructorModel.Adapt<InstructorEntity>();
 
             //Assert
             instructorEntity.Should().BeEquivalentTo(instructorModel);
-
-            return Task.CompletedTask;
         }
 
         [Theory]
         [FixtureWithoutCirculation]
-        public Task AdaptFromEntityToModel_ReturnModel(InstructorEntity instructorEntity)
+        public void AdaptFromEntityToModel_ReturnModel(InstructorEntity instructorEntity)
         {
             //Act
             var instructorModel = instructorEntity.Adapt<InstructorModel>();
 
             //Assert
             instructorModel.Should().BeEquivalentTo(instructorEntity);
-
-            return Task.CompletedTask;
         }
 
         [Theory]
         [FixtureWithoutCirculation]
-        public Task AdaptFromModelToViewModel_ReturnViewModel(InstructorModel instructorModel)
+        public void AdaptFromModelToViewModel_ReturnViewModel(InstructorModel instructorModel)
         {
             //Act
             var instructorViewModel = instructorModel.Adapt<InstructorViewModel>();
 
             //Assert
             instructorViewModel.Should().BeEquivalentTo(instructorModel);
-
-            return Task.CompletedTask;
         }
 
         [Theory]
         [FixtureWithoutCirculation]
-        public Task AdaptFromViewModelToModel_ReturnModel(InstructorViewModel instructorViewModel)
+        public void AdaptFromViewModelToModel_ReturnModel(InstructorViewModel instructorViewModel)
         {
             //Act
             var instructorModel = instructorViewModel.Adapt<InstructorModel>();
 
             //Assert
             instructorModel.Should().BeEquivalentTo(instructorViewModel);
-
-            return Task.CompletedTask;
         }
     }
 }
