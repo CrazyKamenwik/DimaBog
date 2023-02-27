@@ -10,7 +10,6 @@ namespace SkyDrive.Tests.Initialize
             {
                 new()
                 {
-                    Id = 1,
                     FirstName = "FirsNameTest1",
                     MiddleName = "MiddleNameTest1",
                     LastName = "LastNameTest1",
@@ -18,7 +17,6 @@ namespace SkyDrive.Tests.Initialize
                 },
                 new ()
                 {
-                    Id = 2,
                     FirstName = "FirsNameTest2",
                     MiddleName = "MiddleNameTest2",
                     LastName = "LastNameTest2",
@@ -26,7 +24,6 @@ namespace SkyDrive.Tests.Initialize
                 },
                 new ()
                 {
-                    Id = 3,
                     FirstName = "FirsNameTest3",
                     MiddleName = "MiddleNameTest3",
                     LastName = "LastNameTest3",
@@ -34,7 +31,6 @@ namespace SkyDrive.Tests.Initialize
                 },
                 new ()
                 {
-                    Id = 4,
                     FirstName = "FirsNameTest4",
                     MiddleName = "MiddleNameTest4",
                     LastName = "LastNameTest4",
@@ -42,7 +38,6 @@ namespace SkyDrive.Tests.Initialize
                 },
                 new ()
                 {
-                    Id = 5,
                     FirstName = "FirsNameTest5",
                     MiddleName = "MiddleNameTest5",
                     LastName = "LastNameTest5",
@@ -50,7 +45,6 @@ namespace SkyDrive.Tests.Initialize
                 },
                 new ()
                 {
-                    Id = 6,
                     FirstName = "FirsNameTest6",
                     MiddleName = "MiddleNameTest6",
                     LastName = "LastNameTest6",
@@ -58,7 +52,6 @@ namespace SkyDrive.Tests.Initialize
                 },
                 new ()
                 {
-                    Id = 7,
                     FirstName = "FirsNameTest7",
                     MiddleName = "MiddleNameTest7",
                     LastName = "LastNameTest7",
@@ -66,7 +59,6 @@ namespace SkyDrive.Tests.Initialize
                 },
                 new ()
                 {
-                    Id = 8,
                     FirstName = "FirsNameTest8",
                     MiddleName = "MiddleNameTest8",
                     LastName = "LastNameTest8",
@@ -74,7 +66,6 @@ namespace SkyDrive.Tests.Initialize
                 },
                 new ()
                 {
-                    Id = 9,
                     FirstName = "FirsNameTest9",
                     MiddleName = "MiddleNameTest9",
                     LastName = "LastNameTest9",
@@ -89,7 +80,6 @@ namespace SkyDrive.Tests.Initialize
             {
                 new()
                 {
-                    Id = 1,
                     FirstName = "FirsNameTest1",
                     MiddleName = "MiddleNameTest1",
                     LastName = "LastNameTest1",
@@ -98,7 +88,6 @@ namespace SkyDrive.Tests.Initialize
                 },
                 new()
                 {
-                    Id = 2,
                     FirstName = "FirsNameTest2",
                     MiddleName = "MiddleNameTest2",
                     LastName = "LastNameTest2",
@@ -107,7 +96,6 @@ namespace SkyDrive.Tests.Initialize
                 },
                 new()
                 {
-                    Id = 3,
                     FirstName = "FirsNameTest3",
                     MiddleName = "MiddleNameTest3",
                     LastName = "LastNameTest3",
@@ -116,7 +104,6 @@ namespace SkyDrive.Tests.Initialize
                 },
                 new()
                 {
-                    Id = 4,
                     FirstName = "FirsNameTest4",
                     MiddleName = "MiddleNameTest4",
                     LastName = "LastNameTest4",
@@ -125,7 +112,6 @@ namespace SkyDrive.Tests.Initialize
                 },
                 new()
                 {
-                    Id = 5,
                     FirstName = "FirsNameTest5",
                     MiddleName = "MiddleNameTest5",
                     LastName = "LastNameTest5",
@@ -134,7 +120,6 @@ namespace SkyDrive.Tests.Initialize
                 },
                 new()
                 {
-                    Id = 6,
                     FirstName = "FirsNameTest6",
                     MiddleName = "MiddleNameTest6",
                     LastName = "LastNameTest6",
@@ -143,7 +128,6 @@ namespace SkyDrive.Tests.Initialize
                 },
                 new()
                 {
-                    Id = 7,
                     FirstName = "FirsNameTest7",
                     MiddleName = "MiddleNameTest7",
                     LastName = "LastNameTest7",
@@ -152,7 +136,6 @@ namespace SkyDrive.Tests.Initialize
                 },
                 new()
                 {
-                    Id = 8,
                     FirstName = "FirsNameTest8",
                     MiddleName = "MiddleNameTest8",
                     LastName = "LastNameTest8",
@@ -161,7 +144,6 @@ namespace SkyDrive.Tests.Initialize
                 },
                 new()
                 {
-                    Id = 9,
                     FirstName = "FirsNameTest9",
                     MiddleName = "MiddleNameTest9",
                     LastName = "LastNameTest9",
@@ -177,7 +159,6 @@ namespace SkyDrive.Tests.Initialize
             {
                 new()
                 {
-                    Id = 1,
                     DateTimeOfEvent= DateTime.Now,
                     InstructorId = 1,
                     Members = null,
@@ -185,7 +166,6 @@ namespace SkyDrive.Tests.Initialize
                 },
                 new()
                 {
-                    Id = 2,
                     DateTimeOfEvent= DateTime.Now,
                     InstructorId = 2,
                     Members = null,
@@ -193,7 +173,6 @@ namespace SkyDrive.Tests.Initialize
                 },
                 new()
                 {
-                    Id = 3,
                     DateTimeOfEvent= DateTime.Now,
                     InstructorId = 3,
                     Members = null,
@@ -201,7 +180,6 @@ namespace SkyDrive.Tests.Initialize
                 },
                 new()
                 {
-                    Id = 4,
                     DateTimeOfEvent= DateTime.Now,
                     InstructorId = 4,
                     Members = null,
@@ -209,7 +187,6 @@ namespace SkyDrive.Tests.Initialize
                 },
                 new()
                 {
-                    Id = 5,
                     DateTimeOfEvent= DateTime.Now,
                     InstructorId = 5,
                     Members = null,
@@ -217,7 +194,6 @@ namespace SkyDrive.Tests.Initialize
                 },
                 new()
                 {
-                    Id = 6,
                     DateTimeOfEvent= DateTime.Now,
                     InstructorId = 6,
                     Members = null,
@@ -225,7 +201,6 @@ namespace SkyDrive.Tests.Initialize
                 },
                 new()
                 {
-                    Id = 7,
                     DateTimeOfEvent= DateTime.Now,
                     InstructorId = 7,
                     Members = null,
@@ -233,7 +208,6 @@ namespace SkyDrive.Tests.Initialize
                 },
                 new()
                 {
-                    Id = 8,
                     DateTimeOfEvent= DateTime.Now,
                     InstructorId = 8,
                     Members = null,
@@ -241,7 +215,6 @@ namespace SkyDrive.Tests.Initialize
                 },
                 new()
                 {
-                    Id = 9,
                     DateTimeOfEvent= DateTime.Now,
                     InstructorId = 9,
                     Members = null,
