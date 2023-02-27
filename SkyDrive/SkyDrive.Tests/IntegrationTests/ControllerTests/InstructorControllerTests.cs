@@ -18,10 +18,13 @@ namespace SkyDrive.Tests.IntegrationTests.ControllerTests
         [Fact]
         public async Task GetAllInstructors_StatusCodeOK()
         {
+            //Arrange
             var response = await _client.GetAsync("Instructor");
 
+            //Act
             var result = await response.Content.ReadFromJsonAsync<IEnumerable<InstructorViewModel>>();
 
+            //Assert
             result.Should().NotBeNullOrEmpty();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }

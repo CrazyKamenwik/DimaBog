@@ -8,7 +8,7 @@ namespace SkyDrive.Tests.IntegrationTests.ControllerTests
 {
     public class MemberControllerTests : IClassFixture<TestHttpClientFactory<Program>>
     {
-        private HttpClient _client;
+        private readonly HttpClient _client;
 
         public MemberControllerTests(TestHttpClientFactory<Program> appFactory)
         {
@@ -18,11 +18,8 @@ namespace SkyDrive.Tests.IntegrationTests.ControllerTests
         [Fact]
         public async Task GetAllMembers_ReturnOK()
         {
-            var appFactory = new TestHttpClientFactory<Program>();
-            var client = appFactory.CreateClient();
-
             //Act
-            var response = await client.GetAsync("Member");
+            var response = await _client.GetAsync("Member");
             var result = await response.Content.ReadFromJsonAsync<IEnumerable<MemberViewModel>>();
 
             //Assert

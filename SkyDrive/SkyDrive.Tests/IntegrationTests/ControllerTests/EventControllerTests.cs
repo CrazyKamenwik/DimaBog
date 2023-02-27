@@ -18,10 +18,13 @@ namespace SkyDrive.Tests.IntegrationTests.ControllerTests
         [Fact]
         public async Task GetAllEvents_StatusCodeOK()
         {
+            //Arrange
             var response = await _client.GetAsync("Event");
 
+            //Act
             var result = await response.Content.ReadFromJsonAsync<IEnumerable<EventViewModel>>();
 
+            //Assert
             result.Should().NotContainNulls();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
