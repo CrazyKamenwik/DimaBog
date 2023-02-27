@@ -21,7 +21,6 @@ namespace SkyDrive.Tests.FixtureCustomization.Customization
                 .With(p => p.Events, value: null));
 
             fixture.Customize<EventViewModel>(composer => composer
-                //.With(p => p.InstructorId, value: 2)
                 .With(p => p.Members, value: null)
                 .With(p => p.Instructor, value: null)
                 .With(p => p.DateTimeOfEvent, value: DateTime.Now.AddDays(50)));
