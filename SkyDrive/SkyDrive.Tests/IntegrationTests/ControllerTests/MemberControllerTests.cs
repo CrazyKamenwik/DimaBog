@@ -60,7 +60,7 @@ namespace SkyDrive.Tests.IntegrationTests.ControllerTests
         public async Task PostMember_CorrectMember_ReturnOK(MemberViewModel memberViewModel)
         {
             //Arrange
-            memberViewModel.Id = 93;
+            memberViewModel.Id = 0;
 
             //Act
             var response = await _client.PostAsJsonAsync("Member", memberViewModel);
@@ -75,7 +75,7 @@ namespace SkyDrive.Tests.IntegrationTests.ControllerTests
         public async Task PostMember_IncorrectMember_ReturnBadRequest(MemberViewModel memberViewModel)
         {
             //Arrange
-            memberViewModel.Id = 4;
+            memberViewModel.Id = 0;
             memberViewModel.LastName = null!;
 
             //Act

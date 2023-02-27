@@ -62,7 +62,7 @@ namespace SkyDrive.Tests.IntegrationTests.ControllerTests
         public async Task PostInstructor_CorrectInstructor_ReturnOK(InstructorViewModel instructorViewModel)
         {
             //Arrange
-            instructorViewModel.Id = 93;
+            instructorViewModel.Id = 0;
 
             //Act
             var response = await _client.PostAsJsonAsync("Instructor", instructorViewModel);
@@ -77,7 +77,7 @@ namespace SkyDrive.Tests.IntegrationTests.ControllerTests
         public async Task PostInstructor_IncorrectInstructor_ReturnBadRequest(InstructorViewModel instructorViewModel)
         {
             //Arrange
-            instructorViewModel.Id = 4;
+            instructorViewModel.Id = 0;
             instructorViewModel.LastName = null!;
 
             //Act

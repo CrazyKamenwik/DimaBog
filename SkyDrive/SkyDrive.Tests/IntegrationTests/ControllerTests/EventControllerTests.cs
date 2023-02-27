@@ -62,7 +62,7 @@ namespace SkyDrive.Tests.IntegrationTests.ControllerTests
         public async Task PostEvent_CorrectEvent_ReturnOK(EventViewModel eventViewModel)
         {
             //Arrange
-            eventViewModel.Id = 93;
+            eventViewModel.Id = 0;
 
             //Act
             var response = await _client.PostAsJsonAsync("Event", eventViewModel);
@@ -77,7 +77,7 @@ namespace SkyDrive.Tests.IntegrationTests.ControllerTests
         public async Task PostEvent_IncorrectEvent_ReturnInternalServerError(EventViewModel eventViewModel)
         {
             //Arrange
-            eventViewModel.Id = 4;
+            eventViewModel.Id = 0;
             eventViewModel.DateTimeOfEvent = DateTime.Now.AddDays(-1);
 
             //Act
