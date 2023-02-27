@@ -6,6 +6,7 @@ namespace SkyDrive.Tests.Initialize
     {
         public static async void Initialize(ApplicationContext context)
         {
+            await context.Database.EnsureDeletedAsync();
             await context.Database.EnsureCreatedAsync();
 
             context.Members.AddRange(InitializeData.GetMembers());
