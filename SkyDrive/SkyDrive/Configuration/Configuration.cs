@@ -7,7 +7,7 @@ namespace SkyDrive.Configuration
         public static void SetMapster()
         {
             TypeAdapterConfig.GlobalSettings.Default.PreserveReference(true);
-            TypeAdapterConfig.GlobalSettings.Default.MaxDepth(2);
+            TypeAdapterConfig.GlobalSettings.Default.MaxDepth(3);
         }
     }
 }

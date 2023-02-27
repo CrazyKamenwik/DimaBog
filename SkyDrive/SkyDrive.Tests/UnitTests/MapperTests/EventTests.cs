@@ -2,7 +2,7 @@
 using Mapster;
 using SkyDrive.BLL.Models;
 using SkyDrive.DAL.Entities;
-using SkyDrive.Tests.FixtureCustomization;
+using SkyDrive.Tests.FixtureCustomization.Attributes;
 using SkyDrive.ViewModels;
 
 namespace SkyDrive.Tests.UnitTests.MapperTests

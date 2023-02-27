@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkyDrive.BLL", "SkyDrive.BL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkyDrive.DAL", "SkyDrive.DAL\SkyDrive.DAL.csproj", "{8F867E32-C12A-47D9-9811-2E14EAFAD919}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyDrive.Tests", "SkyDrive.Tests\SkyDrive.Tests.csproj", "{2CD18280-F623-4185-B899-8618C0C4898C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkyDrive.Tests", "SkyDrive.Tests\SkyDrive.Tests.csproj", "{2CD18280-F623-4185-B899-8618C0C4898C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
