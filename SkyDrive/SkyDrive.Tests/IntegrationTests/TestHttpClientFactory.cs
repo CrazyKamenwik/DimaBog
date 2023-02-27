@@ -25,7 +25,7 @@ namespace SkyDrive.Tests.IntegrationTests
                     services.Remove(dbContextDescriptor);
 
                 services.AddDbContext<ApplicationContext>(options =>
-                    options.UseInMemoryDatabase(nameof(ApplicationContext)));
+                    options.UseInMemoryDatabase(nameof(ApplicationContext), Root));
 
                 var sp = services.BuildServiceProvider();
 
