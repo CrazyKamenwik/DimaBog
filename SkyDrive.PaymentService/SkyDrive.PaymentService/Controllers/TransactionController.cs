@@ -7,16 +7,16 @@ namespace SkyDrive.PaymentService.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class PaymentController : ControllerBase
+    public class TransactionController : ControllerBase
     {
         private readonly IBraintreeService _braintreeService;
 
-        public PaymentController(IBraintreeService braintreeService)
+        public TransactionController(IBraintreeService braintreeService)
         {
             _braintreeService = braintreeService;
         }
 
-        [HttpGet("/all")]
+        [HttpGet]
         public async Task<IEnumerable<Transaction>> GetAllTransactions()
         {
             return await _braintreeService.GetAllTransactions();
@@ -28,14 +28,14 @@ namespace SkyDrive.PaymentService.Controllers
             return await _braintreeService.GetTransactionsByCustomerId(id);
         }
 
-        [HttpGet("/transaction/{id}")]
+        [HttpGet("/{id}")]
         public async Task<Transaction> GetTransactionById(string id)
         {
             return await _braintreeService.GetTransactionById(id);
         }
 
         [HttpPost]
-        public async Task AcceptPayment(TransactionInfo transactionInfo)
+        public async Task CreateTransaction(TransactionInfo transactionInfo)
         {
             await _braintreeService.CreateTransaction(transactionInfo);
         }

@@ -6,8 +6,7 @@ namespace SkyDrive.DAL.Repositories
     internal class EventRepository : GenericRepository<EventEntity>, IEventRepository
     {
         public EventRepository(ApplicationContext context)
-        : base(context)
+            : base(context)
         { }
-
     }
 }
