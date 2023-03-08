@@ -1,4 +1,5 @@
 ﻿using Braintree;
+using Mapster;
 using Microsoft.Extensions.Configuration;
 using SkyDrive.Payment.Services.Abstractions;
 using SkyDrive.Payment.Services.Exceptions;
@@ -32,19 +33,10 @@ namespace SkyDrive.Payment.Services.Services
 
         private static CustomerRequest CreateCustomerRequest(TransactionInfo transactionInfo)
         {
-            var request = new CustomerRequest
-            {
-                FirstName = transactionInfo.FirstName,
-                LastName = transactionInfo.LastName,
-                PaymentMethodNonce = Braintree.Test.Nonce.Transactable,
-                CreditCard = new CreditCardRequest
-                {
-                    Number = TestCardNumbers.ValidCardMaestro,
-                    ExpirationMonth = transactionInfo.ExpirationMonth,
-                    ExpirationYear = transactionInfo.ExpirationYear,
-                    CVV = transactionInfo.CVV
-                }
-            };
+            var request = transactionInfo.Adapt<CustomerRequest>();
+
+            request.PaymentMethodNonce = Braintree.Test.Nonce.Transactable;
+            request.CreditCard.Number = TestCardNumbers.ValidCardMaestro;
 
             return request;
         }

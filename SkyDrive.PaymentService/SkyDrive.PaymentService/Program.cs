@@ -1,5 +1,6 @@
 using SkyDrive.Payment.Middleware;
 using SkyDrive.Payment.Services.IoC;
+using SkyDrive.Payment.Services.MapsterConfig;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddBraintree();
+builder.Services.RegisterMapsterConfiguration();
 
 var app = builder.Build();
 

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SkyDrive.Payment.Services.Abstractions;
 using SkyDrive.Payment.Services.Models;
 
-namespace SkyDrive.PaymentService.Controllers
+namespace SkyDrive.Payment.Controllers
 {
     [ApiController]
     [Route("[controller]")]

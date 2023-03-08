@@ -2,12 +2,12 @@
 {
     public class TransactionInfo
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string CreditCardNumber { get; set; }
-        public string CVV { get; set; }
-        public string ExpirationMonth { get; set; }
-        public string ExpirationYear { get; set; }
+        public string FirstName { get; set; } = null!;
+        public string LastName { get; set; } = null!;
+        public string CreditCardNumber { get; set; } = null!;
+        public string CVV { get; set; } = null!;
+        public string ExpirationMonth { get; set; } = null!;
+        public string ExpirationYear { get; set; } = null!;
         public decimal Price { get; set; }
     }
 }
