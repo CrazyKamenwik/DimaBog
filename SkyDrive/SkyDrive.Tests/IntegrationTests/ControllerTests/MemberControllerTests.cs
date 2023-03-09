@@ -64,9 +64,10 @@ namespace SkyDrive.Tests.IntegrationTests.ControllerTests
 
             //Act
             var response = await _client.PostAsJsonAsync("Member", memberViewModel);
+            var responseMemberViewModel = await response.Content.ReadFromJsonAsync<MemberViewModel>();
 
             //Assert
-            response.Content.ReadFromJsonAsync<MemberViewModel>().Should().NotBeNull();
+            responseMemberViewModel.Should().NotBeNull();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 

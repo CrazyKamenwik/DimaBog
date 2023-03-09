@@ -66,9 +66,10 @@ namespace SkyDrive.Tests.IntegrationTests.ControllerTests
 
             //Act
             var response = await _client.PostAsJsonAsync("Instructor", instructorViewModel);
+            var responseInstructorViewModel = await response.Content.ReadFromJsonAsync<InstructorViewModel>();
 
             //Assert
-            response.Content.ReadFromJsonAsync<InstructorViewModel>().Should().NotBeNull();
+            responseInstructorViewModel.Should().NotBeNull();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
