@@ -11,9 +11,12 @@ namespace SkyDrive.Tests.FixtureCustomization.Attributes
         { }
 
         public FixtureWithoutCirculationAttribute(IFixture fixture)
-            : base(fixture)
-        {
-            fixture.Customize(new RemoveRecursionFixture());
-        }
+            : base(() =>
+            {
+                fixture.Customize(new RemoveRecursionFixture());
+
+                return fixture;
+            })
+        { }
     }
 }

@@ -22,6 +22,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SkyDrive.BLL\SkyDrive.BLL.csproj" />
+
+    <InternalsVisibleTo Include="SkyDrive.Tests" />
   </ItemGroup>
 
 </Project>
