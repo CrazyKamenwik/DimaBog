@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkyDrive.BLL", "SkyDrive.BL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkyDrive.DAL", "SkyDrive.DAL\SkyDrive.DAL.csproj", "{8F867E32-C12A-47D9-9811-2E14EAFAD919}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyDrive.Tests", "SkyDrive.Tests\SkyDrive.Tests.csproj", "{2CD18280-F623-4185-B899-8618C0C4898C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkyDrive.Tests", "SkyDrive.Tests\SkyDrive.Tests.csproj", "{2CD18280-F623-4185-B899-8618C0C4898C}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{51D784B2-4FBA-4942-9E0F-72E85BE3BC14}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{2CD18280-F623-4185-B899-8618C0C4898C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CD18280-F623-4185-B899-8618C0C4898C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CD18280-F623-4185-B899-8618C0C4898C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51D784B2-4FBA-4942-9E0F-72E85BE3BC14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51D784B2-4FBA-4942-9E0F-72E85BE3BC14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51D784B2-4FBA-4942-9E0F-72E85BE3BC14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51D784B2-4FBA-4942-9E0F-72E85BE3BC14}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

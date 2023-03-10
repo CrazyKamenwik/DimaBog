@@ -12,7 +12,7 @@ namespace SkyDrive.DAL.IoC
         {
             services.AddDbContext<ApplicationContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(configuration.GetConnectionString("DockerConnection"));
             });
 
             services.AddRepositories();
