@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  skydrive:
+    image: ${DOCKER_REGISTRY-}skydrive
+    build:
+      context: .
+      dockerfile: SkyDrive/Dockerfile
+  mssqlserver:
+    image: "mcr.microsoft.com/mssql/server:2019-latest"
+    container_name: sqlserver
+    ports:
+      - 1433:1433
+    environment:
+        - ACCEPT_EULA=Y
+        - SA_PASSWORD=1234@qwerty
+    hostname: sqlserver
