@@ -23,7 +23,7 @@ jobs:
     - name: Restore dependencies
       run: |
             cd ./SkyDrive
-            dotnet restore
+            dotnet restore SkyDrive.sln
     - name: Build
       run: |
             cd ./SkyDrive
