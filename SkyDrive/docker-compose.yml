@@ -6,6 +6,11 @@ services:
     build:
       context: .
       dockerfile: SkyDrive/Dockerfile
+  skydrive.payment:
+    image: ${DOCKER_REGISTRY-}skydrivepayment
+    build:
+      context: ../SkyDrive.PaymentService/
+      dockerfile: SkyDrive.PaymentService/Dockerfile
   mssqlserver:
     image: "mcr.microsoft.com/mssql/server:2019-latest"
     container_name: sqlserver
